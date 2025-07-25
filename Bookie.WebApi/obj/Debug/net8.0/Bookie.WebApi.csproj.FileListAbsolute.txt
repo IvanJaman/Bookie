@@ -1,0 +1,7 @@
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\Bookie.WebApi.csproj.AssemblyReference.cache
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\Bookie.WebApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\Bookie.WebApi.AssemblyInfoInputs.cache
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\Bookie.WebApi.AssemblyInfo.cs
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\Bookie.WebApi.csproj.CoreCompileInputs.cache
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\Bookie.WebApi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\Bookie.WebApi.sourcelink.json

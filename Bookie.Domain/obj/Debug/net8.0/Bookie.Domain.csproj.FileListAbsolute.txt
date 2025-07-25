@@ -1,0 +1,5 @@
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.AssemblyInfoInputs.cache
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.AssemblyInfo.cs
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.sourcelink.json

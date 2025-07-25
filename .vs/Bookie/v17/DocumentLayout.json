@@ -1,12 +1,54 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Zavr\u0161ni\\Bookie\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1F982F5D-C87B-489A-B02D-F57183DE1F9B}|Bookie.Infrastructure\\Bookie.Infrastructure.csproj|c:\\users\\ivan jozina\\desktop\\faks\\zavr\u0161ni\\bookie\\bookie.infrastructure\\data\\bookiedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F982F5D-C87B-489A-B02D-F57183DE1F9B}|Bookie.Infrastructure\\Bookie.Infrastructure.csproj|solutionrelative:bookie.infrastructure\\data\\bookiedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B9F4A3-5CAF-4644-8B61-A68FE6A6F263}|Bookie.WebApi\\Bookie.WebApi.csproj|c:\\users\\ivan jozina\\desktop\\faks\\zavr\u0161ni\\bookie\\bookie.webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B9F4A3-5CAF-4644-8B61-A68FE6A6F263}|Bookie.WebApi\\Bookie.WebApi.csproj|solutionrelative:bookie.webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Zavr\u0161ni\\Bookie\\Bookie.WebApi\\Program.cs",
+              "RelativeDocumentMoniker": "Bookie.WebApi\\Program.cs",
+              "ToolTip": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Zavr\u0161ni\\Bookie\\Bookie.WebApi\\Program.cs",
+              "RelativeToolTip": "Bookie.WebApi\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-25T18:04:37.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BookieDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Zavr\u0161ni\\Bookie\\Bookie.Infrastructure\\Data\\BookieDbContext.cs",
+              "RelativeDocumentMoniker": "Bookie.Infrastructure\\Data\\BookieDbContext.cs",
+              "ToolTip": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Zavr\u0161ni\\Bookie\\Bookie.Infrastructure\\Data\\BookieDbContext.cs",
+              "RelativeToolTip": "Bookie.Infrastructure\\Data\\BookieDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-25T17:53:14.433Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

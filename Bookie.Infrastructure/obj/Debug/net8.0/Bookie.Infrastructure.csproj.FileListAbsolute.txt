@@ -1,0 +1,6 @@
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Infrastructure\obj\Debug\net8.0\Bookie.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Infrastructure\obj\Debug\net8.0\Bookie.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Infrastructure\obj\Debug\net8.0\Bookie.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Infrastructure\obj\Debug\net8.0\Bookie.Infrastructure.AssemblyInfo.cs
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Infrastructure\obj\Debug\net8.0\Bookie.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Infrastructure\obj\Debug\net8.0\Bookie.Infrastructure.sourcelink.json

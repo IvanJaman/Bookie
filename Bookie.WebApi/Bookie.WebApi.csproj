@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bookie.Application\Bookie.Application.csproj" />
+    <ProjectReference Include="..\Bookie.Infrastructure\Bookie.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
