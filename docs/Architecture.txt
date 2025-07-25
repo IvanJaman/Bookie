@@ -1,0 +1,122 @@
+Bookie.sln
+│
+├── Bookie.WebApi/                ← Entry point (React talks to this via HTTP)
+│   └── Controllers/              ← API endpoints
+│   └── DTOs/                     ← Request/response models
+│   └── Program.cs, Startup.cs    ← Configure DI, Auth, Swagger, etc.
+
+├── Bookie.Application/           ← Business logic layer (use cases)
+│   └── Services/                 ← e.g. BookService, UserService
+│   └── Interfaces/              ← IBookService, IUserService
+
+├── Bookie.Domain/                ← Entities, Enums, basic logic
+│   └── Models/                   ← Book, Review, User, Role, ShelfBook, etc.
+
+├── Bookie.Infrastructure/        ← DB-related code
+│   └── Data/                     ← DbContext, Seeders
+│   └── Repositories/            ← EF Core Repos like BookRepository
+│   └── Migrations/
+
+├── Bookie.Tests/                 ← Optional, for unit tests
+
+---------------------------------------------------------------------------------
+CREATING SLN AND ARCHITECTURE USING git Bash:
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie (main)
+$ dotnet new sln -n Bookie
+The template "Solution File" was created successfully.
+
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie (main)
+$ dotnet new webapi -n Bookie.WebApi
+dotnet new classlib -n Bookie.Application
+dotnet new classlib -n Bookie.Domain
+dotnet new classlib -n Bookie.Infrastructure
+The template "ASP.NET Core Web API" was created successfully.
+
+Processing post-creation actions...
+Restoring C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.WebApi\Bookie.WebApi.csproj:
+  Determining projects to restore...
+  Restored C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.WebApi\Bookie.WebApi.csproj (in 2.9 sec).
+Restore succeeded.
+
+
+The template "Class Library" was created successfully.
+
+Processing post-creation actions...
+Restoring C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Application\Bookie.Application.csproj:
+  Determining projects to restore...
+  Restored C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Application\Bookie.Application.csproj (in 111 ms).
+Restore succeeded.
+
+
+The template "Class Library" was created successfully.
+
+Processing post-creation actions...
+Restoring C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\Bookie.Domain.csproj:
+  Determining projects to restore...
+  Restored C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\Bookie.Domain.csproj (in 106 ms).
+Restore succeeded.
+
+
+The template "Class Library" was created successfully.
+
+Processing post-creation actions...
+Restoring C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Infrastructure\Bookie.Infrastructure.csproj:
+  Determining projects to restore...
+  Restored C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Infrastructure\Bookie.Infrastructure.csproj (in 104 ms).
+Restore succeeded.
+
+
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie (main)
+$ dotnet sln add Bookie.WebApi/Bookie.WebApi.csproj
+dotnet sln add Bookie.Application/Bookie.Application.csproj
+dotnet sln add Bookie.Domain/Bookie.Domain.csproj
+dotnet sln add Bookie.Infrastructure/Bookie.Infrastructure.csproj
+Project `Bookie.WebApi\Bookie.WebApi.csproj` added to the solution.
+Project `Bookie.Application\Bookie.Application.csproj` added to the solution.
+Project `Bookie.Domain\Bookie.Domain.csproj` added to the solution.
+Project `Bookie.Infrastructure\Bookie.Infrastructure.csproj` added to the solution.
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie (main)
+$ cd Bookie.
+Bookie.Application/    Bookie.Domain/         Bookie.Infrastructure/ Bookie.WebApi/         Bookie.sln
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie (main)
+$ cd Bookie.WebApi/
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie/Bookie.WebApi (main)
+$ dotnet add reference ../Bookie.Application/Bookie.Application.csproj
+Reference `..\Bookie.Application\Bookie.Application.csproj` added to the project.
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie/Bookie.WebApi (main)
+$ cd ../.
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie (main)
+$ cd Bookie.Application/
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie/Bookie.Application (main)
+$ dotnet add reference ../Bookie.Domain/Bookie.Domain.csproj
+Reference `..\Bookie.Domain\Bookie.Domain.csproj` added to the project.
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie/Bookie.Application (main)
+$ cd ../Bookie.Infrastructure
+dotnet add reference ../Bookie.Application/Bookie.Application.csproj
+dotnet add reference ../Bookie.Domain/Bookie.Domain.csproj
+Reference `..\Bookie.Application\Bookie.Application.csproj` added to the project.
+Reference `..\Bookie.Domain\Bookie.Domain.csproj` added to the project.
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie/Bookie.Infrastructure (main)
+$ start Bookie.sln
+The system cannot find the file Bookie.sln.
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie/Bookie.Infrastructure (main)
+$ cd ./..
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie (main)
+$ start Bookie.sln
+
+Ivan Jozina@DESKTOP-AJU7NQC MINGW64 ~/Desktop/faks/Završni/Bookie (main)
+$
+

@@ -1,0 +1,202 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Infrastructure\\Bookie.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Application\\Bookie.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Application\\Bookie.Application.csproj",
+        "projectName": "Bookie.Application",
+        "projectPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Application\\Bookie.Application.csproj",
+        "packagesPath": "C:\\Users\\Ivan Jozina\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ivan Jozina\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Domain\\Bookie.Domain.csproj": {
+                "projectPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Domain\\Bookie.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Domain\\Bookie.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Domain\\Bookie.Domain.csproj",
+        "projectName": "Bookie.Domain",
+        "projectPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Domain\\Bookie.Domain.csproj",
+        "packagesPath": "C:\\Users\\Ivan Jozina\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ivan Jozina\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Infrastructure\\Bookie.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Infrastructure\\Bookie.Infrastructure.csproj",
+        "projectName": "Bookie.Infrastructure",
+        "projectPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Infrastructure\\Bookie.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Ivan Jozina\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ivan Jozina\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Application\\Bookie.Application.csproj": {
+                "projectPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Application\\Bookie.Application.csproj"
+              },
+              "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Domain\\Bookie.Domain.csproj": {
+                "projectPath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.Domain\\Bookie.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
