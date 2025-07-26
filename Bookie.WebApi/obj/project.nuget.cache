@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eLDvbiApj9Q=",
+  "dgSpecHash": "2SfNnf6wd7M=",
   "success": true,
   "projectFilePath": "C:\\Users\\Ivan Jozina\\Desktop\\faks\\Završni\\Bookie\\Bookie.WebApi\\Bookie.WebApi.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Ivan Jozina\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.7\\microsoft.entityframeworkcore.9.0.7.nupkg.sha512",
     "C:\\Users\\Ivan Jozina\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.7\\microsoft.entityframeworkcore.abstractions.9.0.7.nupkg.sha512",
     "C:\\Users\\Ivan Jozina\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\9.0.7\\microsoft.entityframeworkcore.analyzers.9.0.7.nupkg.sha512",
+    "C:\\Users\\Ivan Jozina\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\9.0.7\\microsoft.entityframeworkcore.inmemory.9.0.7.nupkg.sha512",
     "C:\\Users\\Ivan Jozina\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\9.0.1\\microsoft.entityframeworkcore.relational.9.0.1.nupkg.sha512",
     "C:\\Users\\Ivan Jozina\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\Ivan Jozina\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.7\\microsoft.extensions.caching.abstractions.9.0.7.nupkg.sha512",

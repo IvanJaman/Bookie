@@ -1,5 +1,12 @@
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\bin\Debug\net8.0\Bookie.Domain.deps.json
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\bin\Debug\net8.0\Bookie.Domain.dll
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\bin\Debug\net8.0\Bookie.Domain.pdb
 C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.AssemblyInfoInputs.cache
 C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.AssemblyInfo.cs
 C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.csproj.CoreCompileInputs.cache
 C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.sourcelink.json
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.dll
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\refint\Bookie.Domain.dll
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.pdb
+C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\ref\Bookie.Domain.dll
