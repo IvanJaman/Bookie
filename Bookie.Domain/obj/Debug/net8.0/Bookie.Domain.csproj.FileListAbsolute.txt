@@ -10,3 +10,15 @@ C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0
 C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\refint\Bookie.Domain.dll
 C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.pdb
 C:\Users\Ivan Jozina\Desktop\faks\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\ref\Bookie.Domain.dll
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\bin\Debug\net8.0\Bookie.Domain.deps.json
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\bin\Debug\net8.0\Bookie.Domain.dll
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\bin\Debug\net8.0\Bookie.Domain.pdb
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.AssemblyInfoInputs.cache
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.AssemblyInfo.cs
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.csproj.CoreCompileInputs.cache
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.sourcelink.json
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.dll
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\refint\Bookie.Domain.dll
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\Bookie.Domain.pdb
+D:\FAKS\3. godina\Završni\Bookie\Bookie.Domain\obj\Debug\net8.0\ref\Bookie.Domain.dll
