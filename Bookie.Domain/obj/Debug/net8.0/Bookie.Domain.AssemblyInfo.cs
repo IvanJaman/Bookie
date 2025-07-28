@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bookie.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26a5237026e53a365a70878376ba7a91eb8352c3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+72f4b16556732cec82ecab4823e5db8793202d24")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bookie.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bookie.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -13,11 +13,11 @@ namespace Bookie.Domain.Entities
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Bio { get; set; }
+        public string? WebsiteUrl { get; set; }
 
         public Guid RoleId { get; set; }
         public Role Role { get; set; }
 
-        public ICollection<Publisher> Publishers { get; set; } = new List<Publisher>();
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
         public ICollection<Shelf> Shelves { get; set; } = new List<Shelf>();
     }

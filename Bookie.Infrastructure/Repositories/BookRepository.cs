@@ -18,8 +18,6 @@ namespace Bookie.Infrastructure.Repositories
         {
             return await _context.Books
                 .Include(b => b.Genre)
-                .Include(b => b.Language)
-                .Include(b => b.Publisher)
                 .ToListAsync();
         }
 
@@ -27,8 +25,6 @@ namespace Bookie.Infrastructure.Repositories
         {
             return await _context.Books
                 .Include(b => b.Genre)
-                .Include(b => b.Language)
-                .Include(b => b.Publisher)
                 .FirstOrDefaultAsync(b => b.Id == id);
         }
 
@@ -61,8 +57,6 @@ namespace Bookie.Infrastructure.Repositories
                 .OrderByDescending(b => b.CreatedAt) 
                 .Take(count)
                 .Include(b => b.Genre)
-                .Include(b => b.Language)
-                .Include(b => b.Publisher)
                 .ToListAsync();
         }
 
@@ -71,8 +65,6 @@ namespace Bookie.Infrastructure.Repositories
             return await _context.Books
                 .Where(b => b.Genre.Id == genre.Id)
                 .Include(b => b.Genre)
-                .Include(b => b.Language)
-                .Include(b => b.Publisher)
                 .ToListAsync();
         }
 
@@ -80,8 +72,6 @@ namespace Bookie.Infrastructure.Repositories
         {
             var query = _context.Books
                 .Include(b => b.Genre)
-                .Include(b => b.Language)
-                .Include(b => b.Publisher)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(title))
@@ -99,8 +89,6 @@ namespace Bookie.Infrastructure.Repositories
                 .Where(sb => sb.ShelfId == shelfId)
                 .Select(sb => sb.Book)
                 .Include(b => b.Genre)
-                .Include(b => b.Language)
-                .Include(b => b.Publisher)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(title))

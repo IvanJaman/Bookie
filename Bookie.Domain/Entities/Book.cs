@@ -15,6 +15,7 @@ namespace Bookie.Domain.Entities
         public string Blurb { get; set; }
         public int? PublicationYear { get; set; }
         public int? PageCount { get; set; }
+        public string Language { get; set; }
         public string CoverPhotoUrl { get; set; }
         public DateTime CreatedAt { get; set; }
         public decimal AverageRating { get; set; }
@@ -22,10 +23,8 @@ namespace Bookie.Domain.Entities
 
         public Guid? GenreId { get; set; }
         public Genre Genre { get; set; }
-        public Guid? LanguageId { get; set; }
-        public Language Language { get; set; }
-        public Guid? PublisherId { get; set; }
-        public Publisher Publisher { get; set; }
+        public Guid CreatedByUserId { get; set; }
+        public User CreatedByUser { get; set; }
 
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
         public ICollection<ShelfBook> ShelfBooks { get; set; } = new List<ShelfBook>();

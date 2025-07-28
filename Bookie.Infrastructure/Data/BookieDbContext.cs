@@ -10,8 +10,6 @@ public class BookieDbContext : DbContext
 
     public DbSet<Book> Books { get; set; }
     public DbSet<Genre> Genres { get; set; }
-    public DbSet<Language> Languages { get; set; }
-    public DbSet<Publisher> Publishers { get; set; }
     public DbSet<Review> Reviews { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<Shelf> Shelves { get; set; }
