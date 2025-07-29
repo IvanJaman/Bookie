@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bookie.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4e281c0db54edf266e1aa625f3a42868adb4c1c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+623f028bf22d793d804ea33de20ae42d4f09501d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bookie.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bookie.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,4 +1,5 @@
 using Bookie.Application.Interfaces;
+using Bookie.Application.Mapping;
 using Bookie.Infrastructure;
 using Bookie.Infrastructure.Data;
 using Bookie.Infrastructure.Repositories;
@@ -19,6 +20,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IShelfRepository, ShelfRepository>();
 builder.Services.AddScoped<IShelfBookRepository, ShelfBookRepository>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
 var app = builder.Build();
 

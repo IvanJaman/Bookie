@@ -13,8 +13,8 @@ namespace Bookie.Domain.Entities
         public string Title { get; set; }
         public string ISBN { get; set; }
         public string Blurb { get; set; }
-        public int? PublicationYear { get; set; }
-        public int? PageCount { get; set; }
+        public int PublicationYear { get; set; }
+        public int PageCount { get; set; }
         public string Language { get; set; }
         public string CoverPhotoUrl { get; set; }
         public DateTime CreatedAt { get; set; }

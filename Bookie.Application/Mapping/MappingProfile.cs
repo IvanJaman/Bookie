@@ -1,0 +1,44 @@
+﻿using AutoMapper;
+using Bookie.Domain.Entities;
+using Bookie.Application.DTOs;
+
+namespace Bookie.Application.Mapping
+{
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            // User
+            CreateMap<User, UserDto>()
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
+
+            CreateMap<User, UserSummaryDto>();
+
+            CreateMap<User, UserProfileDto>()
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
+                .ForMember(dest => dest.Shelves, opt => opt.MapFrom(src => src.Shelves))
+                .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews));
+
+            // Shelf
+            CreateMap<Shelf, ShelfDto>()
+                .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.ShelfBooks));
+
+            CreateMap<ShelfBook, ShelfBookDto>()
+                .ForMember(dest => dest.BookId, opt => opt.MapFrom(src => src.Book.Id))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Book.Title))
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Book.Author))
+                .ForMember(dest => dest.CoverPhotoUrl, opt => opt.MapFrom(src => src.Book.CoverPhotoUrl));
+
+            // Review
+            CreateMap<Review, ReviewDto>()
+                .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title))
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
+
+            // Book
+            CreateMap<Book, BookDto>()
+                .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.Name))
+                .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(src => src.Language))
+                .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUser.Username));
+        }
+    }
+}
