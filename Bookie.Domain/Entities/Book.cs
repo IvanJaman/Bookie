@@ -18,7 +18,7 @@ namespace Bookie.Domain.Entities
         public string Language { get; set; }
         public string CoverPhotoUrl { get; set; }
         public DateTime CreatedAt { get; set; }
-        public decimal AverageRating { get; set; }
+        public double AverageRating { get; set; }
         public string GetBookUrl { get; set; }
 
         public Guid? GenreId { get; set; }

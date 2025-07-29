@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "PFWobqFKG6k=",
+  "dgSpecHash": "hexfk27WmYU=",
   "success": true,
   "projectFilePath": "D:\\FAKS\\3. godina\\Završni\\Bookie\\Bookie.Infrastructure\\Bookie.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Ivan Jaman\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Ivan Jaman\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Ivan Jaman\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
     "C:\\Users\\Ivan Jaman\\.nuget\\packages\\microsoft.build.framework\\17.8.3\\microsoft.build.framework.17.8.3.nupkg.sha512",

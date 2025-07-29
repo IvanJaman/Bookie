@@ -286,3 +286,4 @@ D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\refint\Bookie.W
 D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\Bookie.WebApi.pdb
 D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\Bookie.WebApi.genruntimeconfig.cache
 D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\ref\Bookie.WebApi.dll
+D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\bin\Debug\net8.0\BCrypt.Net-Next.dll
