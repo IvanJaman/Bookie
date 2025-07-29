@@ -15,6 +15,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IShelfRepository, ShelfRepository>();
+builder.Services.AddScoped<IShelfBookRepository, ShelfBookRepository>();
 
 var app = builder.Build();
 
