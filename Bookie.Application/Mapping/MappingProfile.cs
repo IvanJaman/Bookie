@@ -8,7 +8,6 @@ namespace Bookie.Application.Mapping
     {
         public MappingProfile()
         {
-            // User
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
 
@@ -19,7 +18,6 @@ namespace Bookie.Application.Mapping
                 .ForMember(dest => dest.Shelves, opt => opt.MapFrom(src => src.Shelves))
                 .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews));
 
-            // Shelf
             CreateMap<Shelf, ShelfDto>()
                 .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.ShelfBooks));
 
@@ -27,14 +25,14 @@ namespace Bookie.Application.Mapping
                 .ForMember(dest => dest.BookId, opt => opt.MapFrom(src => src.Book.Id))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Book.Title))
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Book.Author))
-                .ForMember(dest => dest.CoverPhotoUrl, opt => opt.MapFrom(src => src.Book.CoverPhotoUrl));
+                .ForMember(dest => dest.CoverPhotoUrl, opt => opt.MapFrom(src => src.Book.CoverPhotoUrl))
+                .ForMember(dest => dest.AddedAt, opt => opt.MapFrom(src => src.AddedAt));
 
-            // Review
+
             CreateMap<Review, ReviewDto>()
                 .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title))
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
 
-            // Book
             CreateMap<Book, BookDto>()
                 .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.Name))
                 .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(src => src.Language))

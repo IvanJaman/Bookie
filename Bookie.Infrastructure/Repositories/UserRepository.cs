@@ -2,11 +2,6 @@
 using Bookie.Domain.Entities;
 using Bookie.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bookie.Infrastructure.Repositories
 {
@@ -23,6 +18,7 @@ namespace Bookie.Infrastructure.Repositories
         {
             return await _context.Users
                 .Include(u => u.Shelves)
+                .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
@@ -36,6 +32,14 @@ namespace Bookie.Infrastructure.Repositories
         {
             return await _context.Users
                 .FirstOrDefaultAsync(u => u.Username == username);
+        }
+
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            return await _context.Users
+                .Include(u => u.Shelves)
+                .Include(u => u.Role)
+                .ToListAsync();
         }
 
         public async Task AddAsync(User user)
@@ -58,6 +62,16 @@ namespace Bookie.Infrastructure.Repositories
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> ExistsByEmailAsync(string email) 
+        {
+            return await _context.Users.AnyAsync(u => u.Email == email);
+        }
+
+        public async Task<bool> ExistsByUsernameAsync(string username) 
+        {
+            return await _context.Users.AnyAsync(u => u.Username == username);
         }
     }
 }
