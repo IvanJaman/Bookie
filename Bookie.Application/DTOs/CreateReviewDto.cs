@@ -1,11 +1,17 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bookie.Application.DTOs
 {
     public class CreateReviewDto
     {
+        [Required]
         public Guid BookId { get; set; }
-        public int Rating { get; set; } 
+
+        [Required]
+        public int Rating { get; set; }
+
+        [StringLength(1000, ErrorMessage = "Review text can't exceed 1000 characters.")]
         public string Text { get; set; }
     }
 }

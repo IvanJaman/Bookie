@@ -1,0 +1,121 @@
+﻿using Bookie.Application.DTOs;
+using Bookie.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Bookie.WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
+    {
+        private readonly IUserService _userService;
+
+        public UsersController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        // api/users
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = await _userService.GetAllAsync();
+            return Ok(users);
+        }
+
+        // api/users/{id}
+        [HttpGet("{id}")]
+        [Authorize] 
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var user = await _userService.GetByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
+
+        // api/users/register-user
+        [HttpPost("register-user")]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await _userService.RegisterUserAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+        }
+
+        // api/users/register-publisher
+        [HttpPost("register-publisher")]
+        public async Task<IActionResult> RegisterPublisher([FromBody] RegisterPublisherDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var publisher = await _userService.RegisterPublisherAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = publisher.Id }, publisher);
+        }
+
+        // api/users/login
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.AuthenticateAsync(dto);
+            if (result == null)
+                return Unauthorized("Invalid credentials.");
+
+            return Ok(result);
+        }
+
+        // api/users/profile
+        [HttpPut("profile")]
+        [Authorize]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateUserDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userId = Guid.Parse(User.FindFirst("id")!.Value);
+
+            var updated = await _userService.UpdateProfileAsync(userId, dto);
+            if (!updated)
+                return NotFound();
+
+            return NoContent();
+        }
+
+        // api/users/change-password
+        [HttpPut("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userId = Guid.Parse(User.FindFirst("id")!.Value);
+
+            var changed = await _userService.ChangePasswordAsync(userId, dto);
+            if (!changed)
+                return BadRequest("Password change failed.");
+
+            return NoContent();
+        }
+
+        // api/users/{id}
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")] 
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var deleted = await _userService.DeleteAsync(id);
+            if (!deleted)
+                return NotFound();
+
+            return NoContent();
+        }
+    }
+}
