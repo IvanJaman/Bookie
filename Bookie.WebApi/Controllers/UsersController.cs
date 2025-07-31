@@ -37,42 +37,6 @@ namespace Bookie.WebApi.Controllers
             return Ok(user);
         }
 
-        // api/users/register-user
-        [HttpPost("register-user")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDto dto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var user = await _userService.RegisterUserAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
-        }
-
-        // api/users/register-publisher
-        [HttpPost("register-publisher")]
-        public async Task<IActionResult> RegisterPublisher([FromBody] RegisterPublisherDto dto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var publisher = await _userService.RegisterPublisherAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = publisher.Id }, publisher);
-        }
-
-        // api/users/login
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto dto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var result = await _userService.AuthenticateAsync(dto);
-            if (result == null)
-                return Unauthorized("Invalid credentials.");
-
-            return Ok(result);
-        }
-
         // api/users/profile
         [HttpPut("profile")]
         [Authorize]

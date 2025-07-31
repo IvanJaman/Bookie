@@ -63,15 +63,5 @@ namespace Bookie.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task<bool> ExistsByEmailAsync(string email) 
-        {
-            return await _context.Users.AnyAsync(u => u.Email == email);
-        }
-
-        public async Task<bool> ExistsByUsernameAsync(string username) 
-        {
-            return await _context.Users.AnyAsync(u => u.Username == username);
-        }
     }
 }
