@@ -20,6 +20,7 @@ namespace Bookie.Domain.Entities
 
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
         public ICollection<Shelf> Shelves { get; set; } = new List<Shelf>();
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 
 }

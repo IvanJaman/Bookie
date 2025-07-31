@@ -3,6 +3,7 @@ using System;
 using Bookie.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Bookie.Infrastructure.Migrations
 {
     [DbContext(typeof(BookieDbContext))]
-    partial class BookieDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250731104524_AddRefreshTokenEntity")]
+    partial class AddRefreshTokenEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,8 +150,6 @@ namespace Bookie.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -364,17 +365,6 @@ namespace Bookie.Infrastructure.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("Bookie.Domain.Entities.RefreshToken", b =>
-                {
-                    b.HasOne("Bookie.Domain.Entities.User", "User")
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Bookie.Domain.Entities.Review", b =>
                 {
                     b.HasOne("Bookie.Domain.Entities.Book", "Book")
@@ -459,8 +449,6 @@ namespace Bookie.Infrastructure.Migrations
 
             modelBuilder.Entity("Bookie.Domain.Entities.User", b =>
                 {
-                    b.Navigation("RefreshTokens");
-
                     b.Navigation("Reviews");
 
                     b.Navigation("Shelves");

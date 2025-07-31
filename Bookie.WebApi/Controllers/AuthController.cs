@@ -47,5 +47,13 @@ namespace Bookie.WebApi.Controllers
             var result = await _authService.LoginAsync(dto);
             return Ok(result);
         }
+
+        // api/auth/refresh
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequestDto dto)
+        {
+            var result = await _authService.RefreshTokenAsync(dto.RefreshToken);
+            return Ok(result);
+        }
     }
 }

@@ -3,6 +3,12 @@ using Bookie.Application.DTOs;
 using Bookie.Application.Interfaces;
 using Bookie.Application.Interfaces.Services;
 using Bookie.Domain.Entities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens; 
+using System.IdentityModel.Tokens.Jwt; 
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Bookie.Application.Services
 {
@@ -11,12 +17,16 @@ namespace Bookie.Application.Services
         private readonly IUserRepository _userRepo;
         private readonly IRoleRepository _roleRepo;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _config;
+        private readonly IRefreshTokenRepository _refreshTokenRepo;
 
-        public AuthService(IUserRepository userRepo, IRoleRepository roleRepo, IMapper mapper)
+        public AuthService(IUserRepository userRepo, IRoleRepository roleRepo, IMapper mapper, IConfiguration config, IRefreshTokenRepository refreshTokenRepo)
         {
             _userRepo = userRepo;
             _roleRepo = roleRepo;
             _mapper = mapper;
+            _config = config;
+            _refreshTokenRepo = refreshTokenRepo;
         }
 
         public async Task<AuthResponseDto> RegisterUserAsync(RegisterUserDto dto)
@@ -43,14 +53,19 @@ namespace Bookie.Application.Services
 
             await _userRepo.AddAsync(user);
 
-            var token = GenerateToken(user);
+            var token = GenerateToken(user, role.Name);
+
+            var refreshToken = GenerateRefreshToken(user.Id);
+            await _refreshTokenRepo.AddAsync(refreshToken);
+            await _refreshTokenRepo.SaveChangesAsync();
 
             return new AuthResponseDto
             {
                 UserId = user.Id,
                 Username = user.Username,
                 RoleName = role.Name,
-                Token = token
+                Token = token,
+                RefreshToken = refreshToken.Token
             };
         }
 
@@ -78,14 +93,19 @@ namespace Bookie.Application.Services
 
             await _userRepo.AddAsync(publisher);
 
-            var token = GenerateToken(publisher);
+            var token = GenerateToken(publisher, role.Name);
+
+            var refreshToken = GenerateRefreshToken(publisher.Id);
+            await _refreshTokenRepo.AddAsync(refreshToken);
+            await _refreshTokenRepo.SaveChangesAsync();
 
             return new AuthResponseDto
             {
                 UserId = publisher.Id,
                 Username = publisher.Username,
                 RoleName = role.Name,
-                Token = token
+                Token = token,
+                RefreshToken = refreshToken.Token
             };
         }
 
@@ -100,21 +120,90 @@ namespace Bookie.Application.Services
 
             var role = await _roleRepo.GetByIdAsync(user.RoleId);
 
-            var token = GenerateToken(user);
+            var token = GenerateToken(user, role?.Name ?? "Unknown");
+
+            var refreshToken = GenerateRefreshToken(user.Id);
+            await _refreshTokenRepo.AddAsync(refreshToken);
+            await _refreshTokenRepo.SaveChangesAsync();
 
             return new AuthResponseDto
             {
                 UserId = user.Id,
                 Username = user.Username,
                 RoleName = role?.Name ?? "Unknown",
-                Token = token
+                Token = token,
+                RefreshToken = refreshToken.Token
+            };
+
+        }
+
+        public async Task<AuthResponseDto> RefreshTokenAsync(string refreshToken)
+        {
+            var storedToken = await _refreshTokenRepo.GetByTokenAsync(refreshToken);
+
+            if (storedToken == null || storedToken.IsRevoked || storedToken.Expires < DateTime.UtcNow)
+                throw new Exception("Invalid or expired refresh token.");
+
+            var user = await _userRepo.GetByIdAsync(storedToken.UserId);
+            if (user == null)
+                throw new Exception("User not found.");
+
+            var role = await _roleRepo.GetByIdAsync(user.RoleId);
+            var newAccessToken = GenerateToken(user, role?.Name ?? "Unknown");
+
+            var newRefreshToken = GenerateRefreshToken(user.Id);
+
+            storedToken.IsRevoked = true;
+            await _refreshTokenRepo.UpdateAsync(storedToken);
+
+            await _refreshTokenRepo.AddAsync(newRefreshToken);
+            await _refreshTokenRepo.SaveChangesAsync();
+
+            return new AuthResponseDto
+            {
+                UserId = user.Id,
+                Username = user.Username,
+                RoleName = role?.Name ?? "Unknown",
+                Token = newAccessToken,
+                RefreshToken = newRefreshToken.Token
             };
         }
 
-        private string GenerateToken(User user)
+        private string GenerateToken(User user, string roleName)
         {
-            // TODO: Implement JWT generation
-            return "FAKE_JWT_TOKEN";
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
+                new Claim(ClaimTypes.Role, roleName),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email)
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(2),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private RefreshToken GenerateRefreshToken(Guid userId)
+        {
+            return new RefreshToken
+            {
+                Id = Guid.NewGuid(),
+                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+                UserId = userId,
+                Expires = DateTime.UtcNow.AddDays(7), 
+                CreatedAt = DateTime.UtcNow,
+                IsRevoked = false
+            };
         }
     }
 }

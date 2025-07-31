@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bookie.WebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73c249a89cca342f1a8e15167b70a5e793974296")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7739334069f3e43dc3693ac617e3fa37d8dba1f5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bookie.WebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bookie.WebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
