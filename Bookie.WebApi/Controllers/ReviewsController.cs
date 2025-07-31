@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bookie.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReviewsController : ControllerBase

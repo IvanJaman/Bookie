@@ -297,3 +297,4 @@ D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\bin\Debug\net8.0\Microsoft.Ident
 D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\FAKS\3. godina\Završni\Bookie\Bookie.WebApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
