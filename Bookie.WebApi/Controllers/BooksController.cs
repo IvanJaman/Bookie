@@ -18,7 +18,7 @@ namespace Bookie.WebApi.Controllers
             _bookService = bookService;
         }
 
-        // api/books
+        // api/Books
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -26,7 +26,7 @@ namespace Bookie.WebApi.Controllers
             return Ok(books);
         }
 
-        // api/books/{id}
+        // api/Books/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -35,7 +35,7 @@ namespace Bookie.WebApi.Controllers
             return Ok(book);
         }
 
-        // api/books/search?title=...&author=...
+        // api/Books/search?title=...&author=...
         [HttpGet("search")]
         public async Task<IActionResult> Search([FromQuery] string? title, [FromQuery] string? author)
         {
@@ -43,7 +43,7 @@ namespace Bookie.WebApi.Controllers
             return Ok(results);
         }
 
-        // api/books
+        // api/Books
         [HttpPost]
         [Authorize(Roles = "Publisher,Admin")]
         public async Task<IActionResult> Create([FromBody] CreateBookDto newBook)
@@ -51,13 +51,16 @@ namespace Bookie.WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var userId = Guid.Parse(User.FindFirst("id")?.Value ?? throw new Exception("User ID not found"));
+            var userId = Guid.Parse(
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? User.FindFirst("sub")?.Value
+                ?? throw new Exception("User ID not found in token."));
 
             var createdBook = await _bookService.CreateAsync(newBook, userId);
             return CreatedAtAction(nameof(GetById), new { id = createdBook.Id }, createdBook);
         }
 
-        // api/books/{id}
+        // api/Books/{id}
         [HttpPut("{id}")]
         [Authorize(Roles = "Publisher,Admin")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBookDto updatedBook)
@@ -71,7 +74,7 @@ namespace Bookie.WebApi.Controllers
             return NoContent();
         }
 
-        // api/books/{id}
+        // api/Books/{id}
         [HttpDelete("{id}")]
         [Authorize(Roles = "Publisher,Admin")]
         public async Task<IActionResult> Delete(Guid id)

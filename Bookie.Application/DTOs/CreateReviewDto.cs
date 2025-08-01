@@ -12,6 +12,6 @@ namespace Bookie.Application.DTOs
         public int Rating { get; set; }
 
         [StringLength(1000, ErrorMessage = "Review text can't exceed 1000 characters.")]
-        public string Text { get; set; }
+        public string? Text { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Bookie.WebApi.Controllers
             _shelfService = shelfService;
         }
 
-        // api/shelves/{id}
+        // api/Shelves/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -28,7 +28,7 @@ namespace Bookie.WebApi.Controllers
             return Ok(shelf);
         }
 
-        // api/shelves/user/{userId}
+        // api/Shelves/user/{userId}
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetByUserId(Guid userId)
         {
@@ -36,7 +36,7 @@ namespace Bookie.WebApi.Controllers
             return Ok(shelves);
         }
 
-        // api/shelves
+        // api/Shelves
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateShelfDto dto)
@@ -44,15 +44,18 @@ namespace Bookie.WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var userId = Guid.Parse(User.FindFirst("id")!.Value);
+            var userId = Guid.Parse(
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? User.FindFirst("sub")?.Value
+                ?? throw new Exception("User ID not found in token."));
 
             var shelf = await _shelfService.CreateShelfAsync(dto, userId);
             return CreatedAtAction(nameof(GetById), new { id = shelf.Id }, shelf);
         }
 
-        // api/shelves/{id}/rename
+        // api/Shelves/Rename/{id}
         [Authorize]
-        [HttpPut("{id}/rename")]
+        [HttpPut("Rename/{id}")]
         public async Task<IActionResult> Rename(Guid id, [FromBody] string newName)
         {
             if (string.IsNullOrWhiteSpace(newName))
@@ -65,7 +68,7 @@ namespace Bookie.WebApi.Controllers
             return NoContent();
         }
 
-        // api/shelves/{id}
+        // api/Shelves/{id}
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
@@ -77,7 +80,7 @@ namespace Bookie.WebApi.Controllers
             return NoContent();
         }
 
-        // api/shelves/{shelfId}/books/{bookId}
+        // api/Shelves/{shelfId}/books/{bookId}
         [Authorize]
         [HttpPost("{shelfId}/books/{bookId}")]
         public async Task<IActionResult> AddBook(Guid shelfId, Guid bookId)
@@ -89,7 +92,7 @@ namespace Bookie.WebApi.Controllers
             return NoContent();
         }
 
-        // api/shelves/{shelfId}/books/{bookId}
+        // api/Shelves/{shelfId}/books/{bookId}
         [Authorize]
         [HttpDelete("{shelfId}/books/{bookId}")]
         public async Task<IActionResult> RemoveBook(Guid shelfId, Guid bookId)

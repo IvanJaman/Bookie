@@ -11,5 +11,7 @@ namespace Bookie.Application.Interfaces
         Task AddAsync(User user);
         Task UpdateAsync(User user);
         Task DeleteAsync(Guid id);
+        Task<bool> ExistsByEmailAsync(string email);
+        Task<bool> ExistsByUsernameAsync(string username);
     }
 }

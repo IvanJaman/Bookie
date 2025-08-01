@@ -70,8 +70,11 @@ namespace Bookie.Application.Services
             if (review.UserId != userId)
                 throw new UnauthorizedAccessException("You cannot edit someone else's review.");
 
-            review.Rating = updateDto.Rating;
-            review.Text = updateDto.Text;
+            if (updateDto.Rating.HasValue)
+                review.Rating = updateDto.Rating.Value;
+
+            if (updateDto.Text != null)
+                review.Text = updateDto.Text;
 
             await _reviewRepo.UpdateAsync(review);
             return true;

@@ -17,7 +17,7 @@ namespace Bookie.WebApi.Controllers
             _userService = userService;
         }
 
-        // api/users
+        // api/Users
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -25,7 +25,7 @@ namespace Bookie.WebApi.Controllers
             return Ok(users);
         }
 
-        // api/users/{id}
+        // api/Users/{id}
         [HttpGet("{id}")]
         [Authorize] 
         public async Task<IActionResult> GetById(Guid id)
@@ -37,7 +37,7 @@ namespace Bookie.WebApi.Controllers
             return Ok(user);
         }
 
-        // api/users/profile
+        // api/Users/profile
         [HttpPut("profile")]
         [Authorize]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateUserDto dto)
@@ -45,7 +45,9 @@ namespace Bookie.WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var userId = Guid.Parse(User.FindFirst("id")!.Value);
+            var userId = Guid.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+             ?? User.FindFirst("sub")?.Value
+             ?? throw new Exception("User ID not found in token."));
 
             var updated = await _userService.UpdateProfileAsync(userId, dto);
             if (!updated)
@@ -54,7 +56,7 @@ namespace Bookie.WebApi.Controllers
             return NoContent();
         }
 
-        // api/users/change-password
+        // api/Users/change-password
         [HttpPut("change-password")]
         [Authorize]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
@@ -62,7 +64,11 @@ namespace Bookie.WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var userId = Guid.Parse(User.FindFirst("id")!.Value);
+            var userId = Guid.Parse(
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? User.FindFirst("sub")?.Value
+                ?? throw new Exception("User ID not found in token."));
+
 
             var changed = await _userService.ChangePasswordAsync(userId, dto);
             if (!changed)
@@ -71,7 +77,7 @@ namespace Bookie.WebApi.Controllers
             return NoContent();
         }
 
-        // api/users/{id}
+        // api/Users/{id}
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")] 
         public async Task<IActionResult> Delete(Guid id)

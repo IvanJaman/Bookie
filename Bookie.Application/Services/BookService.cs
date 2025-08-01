@@ -9,12 +9,14 @@ namespace Bookie.Application.Services
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepo;
+        private readonly IGenreRepository _genreRepo;
         private readonly IMapper _mapper;
 
-        public BookService(IBookRepository bookRepo, IMapper mapper)
+        public BookService(IBookRepository bookRepo, IMapper mapper, IGenreRepository genreRepo)
         {
             _bookRepo = bookRepo;
             _mapper = mapper;
+            _genreRepo = genreRepo;
         }
 
         public async Task<BookDto> GetByIdAsync(Guid id)
@@ -37,10 +39,18 @@ namespace Bookie.Application.Services
 
         public async Task<BookDto> CreateAsync(CreateBookDto newBook, Guid createdByUserId)
         {
-            var entity = _mapper.Map<Book>(newBook);
-            entity.CreatedByUserId = createdByUserId;
-            await _bookRepo.AddAsync(entity);
-            return _mapper.Map<BookDto>(entity);
+            var genre = await _genreRepo.GetByNameAsync(newBook.GenreName);
+            if (genre == null)
+                throw new Exception($"Genre '{newBook.GenreName}' not found.");
+
+            var book = _mapper.Map<Book>(newBook);
+            book.Id = Guid.NewGuid();
+            book.CreatedByUserId = createdByUserId;
+            book.GenreId = genre.Id;
+
+            await _bookRepo.AddAsync(book);
+
+            return _mapper.Map<BookDto>(book);
         }
 
         public async Task<bool> UpdateAsync(Guid id, UpdateBookDto updatedBook)

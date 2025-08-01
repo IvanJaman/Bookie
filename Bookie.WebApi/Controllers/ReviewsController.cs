@@ -17,7 +17,7 @@ namespace Bookie.WebApi.Controllers
             _reviewService = reviewService;
         }
 
-        // api/reviews/{id}
+        // api/Reviews/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -28,7 +28,7 @@ namespace Bookie.WebApi.Controllers
             return Ok(review);
         }
 
-        // api/reviews/book/{bookId}
+        // api/Reviews/book/{bookId}
         [HttpGet("book/{bookId}")]
         public async Task<IActionResult> GetByBookId(Guid bookId)
         {
@@ -36,7 +36,7 @@ namespace Bookie.WebApi.Controllers
             return Ok(reviews);
         }
 
-        // api/reviews
+        // api/Reviews
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateReviewDto dto)
@@ -44,13 +44,16 @@ namespace Bookie.WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var userId = Guid.Parse(User.FindFirst("id")!.Value);
+            var userId = Guid.Parse(
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? User.FindFirst("sub")?.Value
+                ?? throw new Exception("User ID not found in token."));
 
             var review = await _reviewService.CreateAsync(dto, userId);
             return CreatedAtAction(nameof(GetById), new { id = review.Id }, review);
         }
 
-        // api/reviews/{id}
+        // api/Reviews/{id}
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateReviewDto dto)
@@ -58,7 +61,10 @@ namespace Bookie.WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var userId = Guid.Parse(User.FindFirst("id")!.Value);
+            var userId = Guid.Parse(
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? User.FindFirst("sub")?.Value
+                ?? throw new Exception("User ID not found in token."));
 
             var updated = await _reviewService.UpdateAsync(id, dto, userId);
             if (!updated)
@@ -67,12 +73,15 @@ namespace Bookie.WebApi.Controllers
             return NoContent();
         }
 
-        // api/reviews/{id}
+        // api/Reviews/{id}
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var userId = Guid.Parse(User.FindFirst("id")!.Value);
+            var userId = Guid.Parse(
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? User.FindFirst("sub")?.Value
+                ?? throw new Exception("User ID not found in token."));
 
             var deleted = await _reviewService.DeleteAsync(id, userId);
             if (!deleted)

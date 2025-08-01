@@ -19,14 +19,22 @@ namespace Bookie.Application.Services
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
         private readonly IRefreshTokenRepository _refreshTokenRepo;
+        private readonly IShelfRepository _shelfRepo;
 
-        public AuthService(IUserRepository userRepo, IRoleRepository roleRepo, IMapper mapper, IConfiguration config, IRefreshTokenRepository refreshTokenRepo)
+        public AuthService(
+            IUserRepository userRepo, 
+            IRoleRepository roleRepo, 
+            IMapper mapper, 
+            IConfiguration config, 
+            IRefreshTokenRepository refreshTokenRepo, 
+            IShelfRepository shelfRepo)
         {
             _userRepo = userRepo;
             _roleRepo = roleRepo;
             _mapper = mapper;
             _config = config;
             _refreshTokenRepo = refreshTokenRepo;
+            _shelfRepo = shelfRepo;
         }
 
         public async Task<AuthResponseDto> RegisterUserAsync(RegisterUserDto dto)
@@ -52,6 +60,8 @@ namespace Bookie.Application.Services
             };
 
             await _userRepo.AddAsync(user);
+
+            await CreateDefaultShelvesForUserAsync(user.Id);
 
             var token = GenerateToken(user, role.Name);
 
@@ -92,6 +102,8 @@ namespace Bookie.Application.Services
             };
 
             await _userRepo.AddAsync(publisher);
+
+            await CreateDefaultShelvesForUserAsync(publisher.Id);
 
             var token = GenerateToken(publisher, role.Name);
 
@@ -204,6 +216,26 @@ namespace Bookie.Application.Services
                 CreatedAt = DateTime.UtcNow,
                 IsRevoked = false
             };
+        }
+
+        private async Task CreateDefaultShelvesForUserAsync(Guid userId)
+        {
+            var wantToReadShelf = new Shelf
+            {
+                Id = Guid.NewGuid(),
+                Name = "Want to Read",
+                UserId = userId
+            };
+
+            var readShelf = new Shelf
+            {
+                Id = Guid.NewGuid(),
+                Name = "Read",
+                UserId = userId
+            };
+
+            await _shelfRepo.AddAsync(wantToReadShelf);
+            await _shelfRepo.AddAsync(readShelf);
         }
     }
 }

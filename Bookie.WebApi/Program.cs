@@ -27,12 +27,14 @@ builder.Services.AddScoped<IShelfRepository, ShelfRepository>();
 builder.Services.AddScoped<IShelfBookRepository, ShelfBookRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IShelfService, ShelfService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

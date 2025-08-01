@@ -18,6 +18,11 @@ namespace Bookie.Application.Mapping
                 .ForMember(dest => dest.Shelves, opt => opt.MapFrom(src => src.Shelves))
                 .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews));
 
+            CreateMap<UpdateUserDto, User>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore()) 
+                .ForMember(dest => dest.Role, opt => opt.Ignore()) 
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+
             CreateMap<Shelf, ShelfDto>()
                 .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.ShelfBooks));
 
@@ -37,6 +42,16 @@ namespace Bookie.Application.Mapping
                 .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.Name))
                 .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(src => src.Language))
                 .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUser.Username));
+
+            CreateMap<CreateBookDto, Book>()
+                .ForMember(dest => dest.Genre, opt => opt.Ignore())
+                .ForMember(dest => dest.GenreId, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow));
+
+            CreateMap<UpdateBookDto, Book>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<Genre, GenreDto>();
         }
     }
 }
