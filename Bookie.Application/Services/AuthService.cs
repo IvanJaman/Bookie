@@ -97,6 +97,7 @@ namespace Bookie.Application.Services
                 Username = dto.Username,
                 Email = dto.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                WebsiteUrl = dto.WebsiteUrl,
                 Bio = "",
                 RoleId = role.Id
             };

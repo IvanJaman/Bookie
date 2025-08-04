@@ -58,6 +58,8 @@ namespace Bookie.Application.Services
 
             await _reviewRepo.AddAsync(review);
 
+            await UpdateAverageRating(review.BookId);
+
             return _mapper.Map<ReviewDto>(review);
         }
 
@@ -77,6 +79,9 @@ namespace Bookie.Application.Services
                 review.Text = updateDto.Text;
 
             await _reviewRepo.UpdateAsync(review);
+
+            await UpdateAverageRating(review.BookId);
+
             return true;
         }
 
@@ -97,7 +102,21 @@ namespace Bookie.Application.Services
                 throw new UnauthorizedAccessException("You cannot delete this review.");
 
             await _reviewRepo.DeleteAsync(reviewId);
+
+            await UpdateAverageRating(review.BookId);
+
             return true;
+        }
+
+        private async Task UpdateAverageRating(Guid bookId)
+        {
+            var reviews = await _reviewRepo.GetByBookIdAsync(bookId);
+            var average = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
+
+            var book = await _bookRepo.GetByIdAsync(bookId);
+            book.AverageRating = Math.Round(average, 2); 
+
+            await _bookRepo.UpdateAsync(book);
         }
     }
 }

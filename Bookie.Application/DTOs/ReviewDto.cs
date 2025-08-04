@@ -1,11 +1,4 @@
-﻿using Bookie.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bookie.Application.DTOs
+﻿namespace Bookie.Application.DTOs
 {
     public class ReviewDto
     {

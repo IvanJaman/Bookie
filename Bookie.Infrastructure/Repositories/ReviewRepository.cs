@@ -23,6 +23,7 @@ namespace Bookie.Infrastructure.Repositories
         {
             return await _context.Reviews
                 .Include(r => r.User)
+                .Include(r => r.Book)
                 .Where(r => r.BookId == bookId)
                 .ToListAsync();
         }
