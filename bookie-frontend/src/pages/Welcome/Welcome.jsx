@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import styles from './Welcome.module.css';
 import { Tooltip } from 'bootstrap'; 
+import { useNavigate } from 'react-router-dom';
 
 function Welcome() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     tooltipTriggerList.forEach((tooltipTriggerEl) => {
@@ -17,7 +20,12 @@ function Welcome() {
 
       <div className={styles.buttons}>
         <div className="d-flex align-items-center gap-2">
-          <button className="btn btn-primary btn-lg">Register as User</button>
+          <button 
+            className="btn btn-primary btn-lg"
+            onClick={() => navigate('/register-user')}
+            >
+              Register as User
+            </button>
           <i
             className="bi bi-info-circle"
             data-bs-toggle="tooltip"
@@ -28,7 +36,12 @@ function Welcome() {
         </div>
 
         <div className="d-flex align-items-center gap-2">
-          <button className="btn btn-primary btn-lg">Register as Publisher</button>
+          <button
+            className="btn btn-primary btn-lg"
+            onClick={() => navigate('/register-publisher')}
+          >
+            Register as Publisher
+          </button>
           <i
             className="bi bi-info-circle"
             data-bs-toggle="tooltip"

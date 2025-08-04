@@ -1,8 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Welcome from './pages/Welcome/Welcome';
+import RegisterUser from './pages/RegisterUser/RegisterUser';
+import RegisterPublisher from './pages/RegisterPublisher/RegisterPublisher';
 
 function App() {
-  return <Welcome />;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/register-user" element={<RegisterUser />} />
+        <Route path="/register-publisher" element={<RegisterPublisher />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
