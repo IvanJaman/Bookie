@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import styles from './Welcome.module.css';
-import { Tooltip } from 'bootstrap'; 
-import { useNavigate } from 'react-router-dom';
+import { Tooltip } from 'bootstrap';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Welcome() {
   const navigate = useNavigate();
@@ -14,18 +13,18 @@ function Welcome() {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <h1>Welcome to Bookie</h1>
-      <p>Please select your account type to get started:</p>
+    <div className="container d-flex flex-column justify-content-center align-items-center min-vh-100 text-center">
+      <h1 className="mb-3">Welcome to Bookie</h1>
+      <p className="mb-4">Please select your account type to get started:</p>
 
-      <div className={styles.buttons}>
+      <div className="d-flex flex-column flex-md-row gap-4 mb-4">
         <div className="d-flex align-items-center gap-2">
-          <button 
+          <button
             className="btn btn-primary btn-lg"
             onClick={() => navigate('/register-user')}
-            >
-              Register as User
-            </button>
+          >
+            Register as User
+          </button>
           <i
             className="bi bi-info-circle"
             data-bs-toggle="tooltip"
@@ -51,6 +50,10 @@ function Welcome() {
           ></i>
         </div>
       </div>
+
+      <p>
+        Already have an account? <Link to="/login">Login</Link>
+      </p>
     </div>
   );
 }
