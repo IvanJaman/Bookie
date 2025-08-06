@@ -14,7 +14,8 @@ function Welcome() {
 
   return (
     <div className="container d-flex flex-column justify-content-center align-items-center min-vh-100 text-center">
-      <h1 className="mb-3">Welcome to Bookie</h1>
+      <h1 className="mb-3">Welcome to Bookie!</h1>
+      <p className="lead">Your favourite place to browse, rate and review  books.</p>
       <p className="mb-4">Please select your account type to get started:</p>
 
       <div className="d-flex flex-column flex-md-row gap-4 mb-4">
