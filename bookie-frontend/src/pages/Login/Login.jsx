@@ -12,6 +12,8 @@ function Login() {
 
   const [message, setMessage] = useState('');
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -31,7 +33,7 @@ function Login() {
       setMessage('Login successful!');
       console.log('Login response:', response.data);
 
-      navigate('/'); // TO DO: Later change to dashboard/home
+      navigate('/home');
     } catch (error) {
       if (error.response) {
         setMessage(`Error: ${error.response.data}`);
@@ -68,9 +70,9 @@ function Login() {
           />
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 position-relative">
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'} 
             className="form-control"
             name="password"
             placeholder="Password"
@@ -78,6 +80,18 @@ function Login() {
             onChange={handleChange}
             required
           />
+          <i
+            className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`} 
+            style={{
+              position: 'absolute',
+              top: '50%',
+              right: '10px',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              fontSize: '1.2rem'
+            }}
+            onClick={() => setShowPassword(!showPassword)} 
+          ></i>
         </div>
 
         <button type="submit" className="btn btn-primary w-100">

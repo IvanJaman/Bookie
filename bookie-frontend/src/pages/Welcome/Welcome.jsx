@@ -29,7 +29,7 @@ function Welcome() {
             className="bi bi-info-circle"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
-            title="User can browse, review, and rate books."
+            title="Users can browse, rate and review books."
             style={{ fontSize: '1.2rem', cursor: 'pointer' }}
           ></i>
         </div>
@@ -45,7 +45,7 @@ function Welcome() {
             className="bi bi-info-circle"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
-            title="Publisher can add new books (intended for publishing houses and indie authors)."
+            title="Publishers can add new books (intended for publishing houses and indie authors)."
             style={{ fontSize: '1.2rem', cursor: 'pointer' }}
           ></i>
         </div>

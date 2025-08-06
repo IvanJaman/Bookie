@@ -14,6 +14,8 @@ function RegisterUser() {
 
   const [message, setMessage] = useState('');
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -28,6 +30,8 @@ function RegisterUser() {
       const response = await api.post('/auth/register-user', formData);
       setMessage('User registered successfully!');
       console.log(response.data);
+
+      navigate('/home');
     } catch (error) {
       if (error.response) {
         setMessage(`Error: ${error.response.data}`);
@@ -70,21 +74,32 @@ function RegisterUser() {
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-4 position-relative">
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'} 
             className="form-control"
             name="password"
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
             required
-            minLength={6}
           />
+          <i
+            className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`} 
+            style={{
+              position: 'absolute',
+              top: '50%',
+              right: '10px',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              fontSize: '1.2rem'
+            }}
+            onClick={() => setShowPassword(!showPassword)} 
+          ></i>
         </div>
-        <div className="mb-4">
+        <div className="mb-4 position-relative">
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'} 
             className="form-control"
             name="confirmPassword"
             placeholder="Confirm Password"
@@ -92,6 +107,18 @@ function RegisterUser() {
             onChange={handleChange}
             required
           />
+          <i
+            className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`} 
+            style={{
+              position: 'absolute',
+              top: '50%',
+              right: '10px',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              fontSize: '1.2rem'
+            }}
+            onClick={() => setShowPassword(!showPassword)} 
+          ></i>
         </div>
         <button type="submit" className="btn btn-primary w-100">Continue...</button>
       </form>

@@ -15,6 +15,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BookieDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBookieFrontend",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:3000") 
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -65,6 +77,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowBookieFrontend");
 
 app.UseHttpsRedirection();
 
