@@ -87,8 +87,9 @@ namespace Bookie.Infrastructure.Repositories
         {
             var query = _context.ShelfBooks
                 .Where(sb => sb.ShelfId == shelfId)
+                .Include(sb => sb.Book)
+                .ThenInclude(b => b.Genre)
                 .Select(sb => sb.Book)
-                .Include(b => b.Genre)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(title))

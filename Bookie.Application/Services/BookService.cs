@@ -67,5 +67,35 @@ namespace Bookie.Application.Services
             await _bookRepo.DeleteAsync(id); 
             return true;
         }
+
+        public async Task<Dictionary<string, IEnumerable<BookDto>>> GetRecentlyAddedByGenreAsync(int count)
+        {
+            var genres = await _genreRepo.GetAllAsync();
+            var result = new Dictionary<string, IEnumerable<BookDto>>();
+
+            foreach (var genre in genres)
+            {
+                var books = await _bookRepo.GetRecentlyAddedByGenreAsync(genre, count);
+                result[genre.Name] = _mapper.Map<IEnumerable<BookDto>>(books);
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<BookDto>> GetByGenreAsync(string genreName)
+        {
+            var genre = await _genreRepo.GetByNameAsync(genreName);
+            if (genre == null)
+                throw new Exception($"Genre '{genreName}' not found.");
+
+            var books = await _bookRepo.GetByGenreAsync(genre);
+            return _mapper.Map<IEnumerable<BookDto>>(books);
+        }
+
+        public async Task<IEnumerable<BookDto>> SearchInShelfAsync(Guid shelfId, string? title, string? author)
+        {
+            var books = await _bookRepo.SearchInShelfAsync(shelfId, title, author);
+            return _mapper.Map<IEnumerable<BookDto>>(books);
+        }
     }
 }

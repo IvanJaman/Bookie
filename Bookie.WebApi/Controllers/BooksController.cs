@@ -84,5 +84,29 @@ namespace Bookie.WebApi.Controllers
 
             return NoContent();
         }
+
+        // api/Books/recently-added-by-genre
+        [HttpGet("recently-added-by-genre")]
+        public async Task<IActionResult> GetRecentlyAddedByGenre([FromQuery] int count = 5)
+        {
+            var booksByGenre = await _bookService.GetRecentlyAddedByGenreAsync(count);
+            return Ok(booksByGenre);
+        }
+
+        // api/Books/by-genre/{genreName}
+        [HttpGet("by-genre/{genreName}")]
+        public async Task<IActionResult> GetByGenre(string genreName)
+        {
+            var books = await _bookService.GetByGenreAsync(genreName);
+            return Ok(books);
+        }
+
+        // api/Books/shelves/{shelfId}/search?title=...&author=...
+        [HttpGet("shelves/{shelfId}/search")]
+        public async Task<IActionResult> SearchInShelf(Guid shelfId, [FromQuery] string? title, [FromQuery] string? author)
+        {
+            var books = await _bookService.SearchInShelfAsync(shelfId, title, author);
+            return Ok(books);
+        }
     }
 }
