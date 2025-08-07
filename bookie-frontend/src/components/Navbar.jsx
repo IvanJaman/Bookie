@@ -21,6 +21,11 @@ function Navbar({ userRole }) {
     };
   }, []);
 
+  useEffect(() => {
+    const name = getUsernameFromToken();
+    if (name) setUsername(name);
+  }, []);
+
   const handleSearch = async (e) => {
     e.preventDefault();
 
@@ -32,14 +37,16 @@ function Navbar({ userRole }) {
         response = await api.get(`/books/shelves/${shelfId}/search`, {
           params: { title: searchTerm }
         });
+
+        navigate(`/shelf/${shelfId}`, { state: { searchResults: response.data } });
+
       } else {
         response = await api.get('/books/search', {
           params: { title: searchTerm }
         });
-      }
 
-      console.log('Search results:', response.data);
-      // TODO: Display results in UI
+        navigate('/home', { state: { searchResults: response.data } });
+      }
     } catch (error) {
       console.error('Search error:', error);
     }
@@ -53,7 +60,7 @@ function Navbar({ userRole }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary px-3">
       <Link
-        className="navbar-brand fw-bold"
+        className="navbar-brand fw-bold me-4"
         style={{ fontSize: '28px' }}
         to="/home"
       >
@@ -83,12 +90,9 @@ function Navbar({ userRole }) {
           </button>
         </form>
 
-        <ul className="navbar-nav ms-auto align-items-center">
-
+        <ul className="navbar-nav d-flex flex-row align-items-center gap-2 ms-auto">
           {username && (
-            <li className="nav-item me-3 text-white fw-semibold">
-              {username}
-            </li>
+            <li className="nav-item text-white fw-semibold">{username}</li>
           )}
 
           {(userRole === 'Publisher' || userRole === 'Admin') && (

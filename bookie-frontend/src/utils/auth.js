@@ -19,7 +19,7 @@ export function getUsernameFromToken() {
 
   try {
     const decoded = jwtDecode(token);
-    return decoded?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] || null;
+    return decoded?.['unique_name'] || null;
   } catch {
     return null;
   }
