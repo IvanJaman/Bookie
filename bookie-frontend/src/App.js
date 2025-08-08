@@ -8,6 +8,7 @@ import RegisterUser from './pages/RegisterUser/RegisterUser';
 import RegisterPublisher from './pages/RegisterPublisher/RegisterPublisher';
 import Home from './pages/Home/Home';
 import Layout from './components/Layout';
+import AddNewBook from './pages/AddNewBook/AddNewBook';
 import { getUserRole } from './utils/auth';
 
 function App() {
@@ -37,6 +38,14 @@ function App() {
           element={
             <Layout userRole={role}>
               <Home />
+            </Layout>
+          }
+        />
+        <Route
+          path="/add-new-book"
+          element={
+            <Layout userRole={role}>
+              <AddNewBook />
             </Layout>
           }
         />

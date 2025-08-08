@@ -87,7 +87,7 @@ namespace Bookie.WebApi.Controllers
 
         // api/Books/recently-added-by-genre
         [HttpGet("recently-added-by-genre")]
-        public async Task<IActionResult> GetRecentlyAddedByGenre([FromQuery] int count = 5)
+        public async Task<IActionResult> GetRecentlyAddedByGenre([FromQuery] int count = 6)
         {
             var booksByGenre = await _bookService.GetRecentlyAddedByGenreAsync(count);
             return Ok(booksByGenre);

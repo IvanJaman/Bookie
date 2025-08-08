@@ -21,16 +21,36 @@ function Home() {
     <div className="container my-4">
       {searchResults ? (
         <>
-          <div className="d-flex flex-wrap gap-3">
+          <div className="d-flex flex-column gap-4">
             {searchResults.map(book => (
-              <div key={book.id} className="text-center" style={{ width: '150px' }}>
+              <div
+                key={book.id}
+                className="p-3 rounded shadow-sm d-flex"
+                style={{ backgroundColor: 'rgba(128, 228, 149, 0.5)' }}
+              >
                 <img
                   src={book.coverPhotoUrl}
                   alt={book.title}
                   className="img-fluid rounded"
-                  style={{ height: '200px', objectFit: 'cover' }}
+                  style={{
+                    width: '180px',
+                    minHeight: '300px',
+                    objectFit: 'cover',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => window.location.href = `/book/${book.id}`}
                 />
-                <p className="mt-2 fw-semibold">{book.title}</p>
+
+                <div className="ms-3 d-flex flex-column justify-content-between">
+                  <div>
+                    <h5 className="fw-bold mb-1">{book.title}</h5>
+                    <p className="mb-1"><strong>by {book.author}</strong> </p>
+                    <p className="mb-1"><strong>Rating: {book.averageRating}</strong></p>
+                    <p className="mb-0 text-muted">
+                      {book.blurb.length > 200 ? `${book.blurb.slice(0, 200)}...` : book.blurb}
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -40,22 +60,48 @@ function Home() {
           <div
             key={genre}
             className="p-4 mb-4 rounded shadow-sm"
-            style={{ backgroundColor: 'rgba(40, 167, 69, 0.1)' }}
+            style={{ backgroundColor: 'rgba(128, 228, 149, 0.3)' }}
           >
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h4 className="mb-0">Newest from {genre}</h4>
-              {/* Add See More button later here */}
             </div>
             <div className="d-flex overflow-auto gap-3">
               {books.map(book => (
-                <div key={book.id} style={{ minWidth: '120px' }}>
+                <div
+                  key={book.id}
+                  className="p-2 rounded bg-success-subtle shadow-sm"
+                  style={{
+                    width: '140px',
+                    minHeight: '260px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    flexShrink: 0, 
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => window.location.href = `/book/${book.id}`}
+                >
                   <img
                     src={book.coverPhotoUrl}
                     alt={book.title}
                     className="img-fluid rounded"
-                    style={{ height: '180px', objectFit: 'cover', width: '100%' }}
+                    style={{
+                      height: '180px',
+                      width: '100%',
+                      objectFit: 'cover',
+                    }}
                   />
-                  <p className="mt-2 text-center">{book.title}</p>
+                  <p
+                    className="mt-2 text-center fw-semibold"
+                    style={{
+                      maxWidth: '100%',
+                      wordWrap: 'break-word',
+                      fontSize: '0.95rem',
+                      lineHeight: '1.2',
+                    }}
+                  >
+                    {book.title}
+                  </p>
                 </div>
               ))}
             </div>

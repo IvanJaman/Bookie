@@ -58,7 +58,7 @@ function Navbar({ userRole }) {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary px-3">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary px-3 sticky-top">
       <Link
         className="navbar-brand fw-bold me-4"
         style={{ fontSize: '28px' }}
@@ -99,7 +99,7 @@ function Navbar({ userRole }) {
             <li className="nav-item">
               <Link
                 className="nav-link"
-                to="/add-book"
+                to="/add-new-book"
                 data-bs-toggle="tooltip"
                 data-bs-placement="bottom"
                 title="Add a new book"
