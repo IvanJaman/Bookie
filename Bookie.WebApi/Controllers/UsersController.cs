@@ -37,6 +37,23 @@ namespace Bookie.WebApi.Controllers
             return Ok(user);
         }
 
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<IActionResult> GetCurrentUserProfile()
+        {
+            var userId = Guid.Parse(
+                User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? User.FindFirst("sub")?.Value
+                ?? throw new Exception("User ID not found in token.")
+            );
+
+            var user = await _userService.GetByIdAsync(userId);
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
+
         // api/Users/profile
         [HttpPut("profile")]
         [Authorize]

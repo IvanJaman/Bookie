@@ -8,15 +8,11 @@ namespace Bookie.Application.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<User, UserDto>()
-                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
-
             CreateMap<User, UserSummaryDto>();
 
             CreateMap<User, UserProfileDto>()
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
-                .ForMember(dest => dest.Shelves, opt => opt.MapFrom(src => src.Shelves))
-                .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews));
+                .ForMember(dest => dest.Shelves, opt => opt.MapFrom(src => src.Shelves));
 
             CreateMap<UpdateUserDto, User>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore()) 

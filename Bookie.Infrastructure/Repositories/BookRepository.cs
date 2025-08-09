@@ -74,14 +74,22 @@ namespace Bookie.Infrastructure.Repositories
                 .Include(b => b.Genre)
                 .AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(title))
-                query = query.Where(b => b.Title.Contains(title));
+            title = title?.Trim();
+            author = author?.Trim();
 
-            if (!string.IsNullOrWhiteSpace(author))
-                query = query.Where(b => b.Author.Contains(author));
+            if (!string.IsNullOrWhiteSpace(title) || !string.IsNullOrWhiteSpace(author))
+            {
+                query = query.Where(b =>
+                    (!string.IsNullOrWhiteSpace(title) &&
+                     b.Title.ToLower().Contains(title.ToLower())) ||
+                    (!string.IsNullOrWhiteSpace(author) &&
+                     b.Author.ToLower().Contains(author.ToLower()))
+                );
+            }
 
             return await query.ToListAsync();
         }
+
 
         public async Task<IEnumerable<Book>> SearchInShelfAsync(Guid shelfId, string? title, string? author)
         {

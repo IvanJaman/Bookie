@@ -26,15 +26,14 @@ function Home() {
               <div
                 key={book.id}
                 className="p-3 rounded shadow-sm d-flex"
-                style={{ backgroundColor: 'rgba(128, 228, 149, 0.5)' }}
               >
                 <img
                   src={book.coverPhotoUrl}
                   alt={book.title}
                   className="img-fluid rounded"
                   style={{
-                    width: '180px',
-                    minHeight: '300px',
+                    width: '160px',
+                    minHeight: '250px',
                     objectFit: 'cover',
                     cursor: 'pointer'
                   }}
@@ -47,7 +46,7 @@ function Home() {
                     <p className="mb-1"><strong>by {book.author}</strong> </p>
                     <p className="mb-1"><strong>Rating: {book.averageRating}</strong></p>
                     <p className="mb-0 text-muted">
-                      {book.blurb.length > 200 ? `${book.blurb.slice(0, 200)}...` : book.blurb}
+                      {book.blurb.length > 200 ? `${book.blurb.slice(0, 500)}...` : book.blurb}
                     </p>
                   </div>
                 </div>
@@ -59,8 +58,7 @@ function Home() {
         Object.entries(booksByGenre).map(([genre, books]) => (
           <div
             key={genre}
-            className="p-4 mb-4 rounded shadow-sm"
-            style={{ backgroundColor: 'rgba(128, 228, 149, 0.3)' }}
+            className="p-4 mb-4 border rounded bg-white shadow-sm"
           >
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h4 className="mb-0">Newest from {genre}</h4>
@@ -69,7 +67,7 @@ function Home() {
               {books.map(book => (
                 <div
                   key={book.id}
-                  className="p-2 rounded bg-success-subtle shadow-sm"
+                  className="p-2 border rounded bg-white shadow-sm"
                   style={{
                     width: '140px',
                     minHeight: '260px',

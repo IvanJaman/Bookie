@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bookie.Application.DTOs
+﻿namespace Bookie.Application.DTOs
 {
     public class UserProfileDto
     {
@@ -14,6 +8,5 @@ namespace Bookie.Application.DTOs
         public string Bio { get; set; }
         public string RoleName { get; set; }
         public List<ShelfDto> Shelves { get; set; } = new();
-        public List<ReviewDto> Reviews { get; set; } = new();
     }
 }

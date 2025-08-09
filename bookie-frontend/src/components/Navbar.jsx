@@ -42,7 +42,7 @@ function Navbar({ userRole }) {
 
       } else {
         response = await api.get('/books/search', {
-          params: { title: searchTerm }
+          params: { title: searchTerm, author: searchTerm }
         });
 
         navigate('/home', { state: { searchResults: response.data } });
