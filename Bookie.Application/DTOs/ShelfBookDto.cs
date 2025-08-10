@@ -11,6 +11,7 @@ namespace Bookie.Application.DTOs
         public Guid BookId { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
+        public string Blurb { get; set; }
         public string CoverPhotoUrl { get; set; }
         public DateTime AddedAt { get; set; }
     }

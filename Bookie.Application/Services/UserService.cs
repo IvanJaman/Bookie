@@ -19,6 +19,13 @@ namespace Bookie.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<UserProfileDto> GetCurrentUserProfileAsync(Guid id)
+        {
+            var user = await _userRepo.GetByIdAsync(id);
+            if (user == null) throw new Exception("User not found.");
+            return _mapper.Map<UserProfileDto>(user);
+        }
+
         public async Task<UserDto> GetByIdAsync(Guid id)
         {
             var user = await _userRepo.GetByIdAsync(id);

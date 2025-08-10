@@ -11,6 +11,10 @@ import Layout from './components/Layout';
 import AddNewBook from './pages/AddNewBook/AddNewBook';
 import MyProfile from './pages/MyProfile/MyProfile';
 import { getUserRole } from './utils/auth';
+import UpdateProfile from './pages/UpdateProfile/UpdateProfile';
+import ChangePassword from './pages/ChangePassword/ChangePassword';
+import CreateShelf from './pages/CreateShelf/CreateShelf';
+import ShelfDetail from './pages/ShelfDetail/ShelfDetail';
 
 function App() {
   const [role, setRole] = useState(getUserRole());
@@ -56,6 +60,38 @@ function App() {
             <Layout userRole={role}>
               <MyProfile />
             </Layout>
+          } 
+        />
+        <Route 
+          path="/update-profile" 
+          element={
+            <Layout userRole={role}>
+              <UpdateProfile />
+            </Layout>
+          } 
+        />
+        <Route 
+          path="/change-password" 
+          element={
+            <Layout userRole={role}>
+              <ChangePassword />
+            </Layout>
+          } 
+        />
+        <Route 
+          path="/create-shelf" 
+          element={
+            <Layout userRole={role}>
+              <CreateShelf />
+            </Layout>
+          } 
+        />
+        <Route 
+          path="/myshelves/:shelfId"
+          element={
+            <Layout userRole={role}>
+            <ShelfDetail />
+          </Layout>
           } 
         />
       </Routes>

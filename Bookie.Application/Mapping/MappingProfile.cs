@@ -8,6 +8,8 @@ namespace Bookie.Application.Mapping
     {
         public MappingProfile()
         {
+            CreateMap<User, UserDto>();
+
             CreateMap<User, UserSummaryDto>();
 
             CreateMap<User, UserProfileDto>()
@@ -26,6 +28,7 @@ namespace Bookie.Application.Mapping
                 .ForMember(dest => dest.BookId, opt => opt.MapFrom(src => src.Book.Id))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Book.Title))
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Book.Author))
+                .ForMember(dest => dest.Blurb, opt => opt.MapFrom(src => src.Book.Blurb))
                 .ForMember(dest => dest.CoverPhotoUrl, opt => opt.MapFrom(src => src.Book.CoverPhotoUrl))
                 .ForMember(dest => dest.AddedAt, opt => opt.MapFrom(src => src.AddedAt));
 

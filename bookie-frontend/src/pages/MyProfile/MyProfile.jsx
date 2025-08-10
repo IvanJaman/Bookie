@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api/bookieApi';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from 'bootstrap';
 
 export default function MyProfile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new Tooltip(tooltipTriggerEl);
+    });
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +58,7 @@ export default function MyProfile() {
       <p><strong>Bio:</strong> {user.bio || 'No bio yet.'}</p>
       <p><strong>Role:</strong> {user.roleName}</p>
 
-      <h2 className="mt-4">My Shelves</h2>  
+      <h2 className="mt-4">My Shelves</h2>
       <div className="d-flex flex-wrap gap-3 mt-3">
         {shelves.length === 0 ? (
             <p>No shelves found.</p>
@@ -62,9 +70,7 @@ export default function MyProfile() {
             const lastFourBooks = sortedBooks.slice(0, 4);
 
             const handleShelfClick = () => {                
-                const encodedShelfName = encodeURIComponent(shelf.name);
-                navigate(`/myshelves/${encodedShelfName}`);
-                
+              navigate(`/myshelves/${shelf.id}`);
             };
 
             return (
@@ -107,11 +113,30 @@ export default function MyProfile() {
                     {shelf.books.length} book{shelf.books.length !== 1 ? 's' : ''}
                     </p>
                 </div>
-                </div>
+              </div>
             );
             })
         )}
+        <div
+          className="d-flex align-items-center justify-content-center"
+          style={{
+            width: '180px',
+            height: '300px', 
+          }}
+        >
+          <button
+            type="button"
+            className="btn btn-outline-success d-flex align-items-center justify-content-center rounded"
+            style={{ width: '50px', height: '50px' }}
+            onClick={() => navigate('/create-shelf')}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="Create New Shelf"
+          >
+            <i className="bi bi-plus fs-3"></i>
+          </button>
         </div>
-    </div>
+      </div>
+  </div>
   );
 }

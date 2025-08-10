@@ -47,7 +47,7 @@ namespace Bookie.WebApi.Controllers
                 ?? throw new Exception("User ID not found in token.")
             );
 
-            var user = await _userService.GetByIdAsync(userId);
+            var user = await _userService.GetCurrentUserProfileAsync(userId);
             if (user == null)
                 return NotFound();
 
