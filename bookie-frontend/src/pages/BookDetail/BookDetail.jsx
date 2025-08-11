@@ -38,38 +38,58 @@ export default function BookDetail() {
   const userRole = getUserRole();
   const userId = getUserIdFromToken();
 
+  const [reviews, setReviews] = useState([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
+  const [errorReviews, setErrorReviews] = useState('');
+
+  const [newRating, setNewRating] = useState(5);
+  const [newText, setNewText] = useState('');
+  const [submittingReview, setSubmittingReview] = useState(false);
+
   useEffect(() => {
-    const fetchBook = async () => {
+    async function fetchBook() {
       try {
         const res = await api.get(`/books/${id}`);
         setBook(res.data);
-      } catch (err) {
-        console.error(err);
+      } catch {
         setError('Failed to load book details.');
       } finally {
         setLoading(false);
       }
-    };
+    }
+
+    async function fetchReviews() {
+    try {
+        const res = await api.get(`/reviews/book/${id}`);
+        const sortedReviews = [...res.data].sort((a, b) => b.rating - a.rating);
+        setReviews(sortedReviews);
+    } catch {
+        setErrorReviews('Failed to load reviews.');
+    } finally {
+        setLoadingReviews(false);
+    }
+    }
 
     fetchBook();
+    fetchReviews();
   }, [id]);
 
   const openModal = async () => {
     try {
-        const userId = getUserIdFromToken();
-        if (!userId) {
+      const userId = getUserIdFromToken();
+      if (!userId) {
         alert("User ID not found. Please log in again.");
         return;
-        }
+      }
 
-        const res = await api.get(`/shelves/user/${userId}`);
-        setShelves(res.data);
-        setShowModal(true);
+      const res = await api.get(`/shelves/user/${userId}`);
+      setShelves(res.data);
+      setShowModal(true);
     } catch (err) {
-        console.error(err);
-        alert("Failed to load shelves.");
+      console.error(err);
+      alert("Failed to load shelves.");
     }
-    };
+  };
 
   const addToShelf = async (shelfId) => {
     setAdding(true);
@@ -97,6 +117,32 @@ export default function BookDetail() {
     }
   };
 
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+    if (newRating < 1 || newRating > 5) {
+      alert('Rating must be between 1 and 5');
+      return;
+    }
+    setSubmittingReview(true);
+
+    try {
+      await api.post('/reviews', {
+        bookId: id,
+        rating: newRating,
+        text: newText.trim(),
+      });
+      alert('Review submitted!');
+      setNewRating(5);
+      setNewText('');
+      const res = await api.get(`/reviews/book/${id}`);
+      setReviews(res.data);
+    } catch {
+      alert('Failed to submit review');
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
+
   if (loading) return <p>Loading book...</p>;
   if (error) return <p className="text-danger">{error}</p>;
   if (!book) return <p>Book not found.</p>;
@@ -106,7 +152,7 @@ export default function BookDetail() {
     (userRole === "Publisher" && userId && userId === book.createdByUserId);
 
   return (
-    <div className="container mt-4 position-relative">
+    <div className="container mt-4 position-relative pb-5">
       <div className="row">
         <div className="col-md-4">
           <img
@@ -129,21 +175,21 @@ export default function BookDetail() {
 
           <p>
             <strong style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3em' }}>
-                Average Rating:
-                <StarRating rating={book.averageRating} size="1.5rem" />
-                ({book.averageRating})
+              Average Rating:
+              <StarRating rating={book.averageRating} size="1.5rem" />
+              ({book.averageRating})
             </strong>
           </p>
 
           <div className="d-flex gap-2 mb-3">
             <button className="btn btn-success" onClick={openModal}>
-                Add to Shelf
+              Add to Shelf
             </button>
 
             {canDelete && (
-                <button className="btn btn-danger" onClick={handleDeleteBook}>
+              <button className="btn btn-danger" onClick={handleDeleteBook}>
                 Delete Book
-                </button>
+              </button>
             )}
           </div>
 
@@ -153,36 +199,106 @@ export default function BookDetail() {
           </div>
 
           {showModal && (
-                <div className="modal show d-block" tabIndex="-1">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">Select Shelf</h5>
-                        <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
-                    </div>
-                    <div className="modal-body">
-                        {shelves.length > 0 ? (
-                        shelves.map(shelf => (
-                            <button
-                            key={shelf.id}
-                            className="btn btn-outline-primary w-100 mb-2"
-                            disabled={adding}
-                            onClick={() => addToShelf(shelf.id)}
-                            >
-                            {shelf.name}
-                            </button>
-                        ))
-                        ) : (
-                        <p>No shelves found.</p>
-                        )}
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
-                    </div>
-                    </div>
+            <div className="modal show d-block" tabIndex="-1">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Select Shelf</h5>
+                    <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+                  </div>
+                  <div className="modal-body">
+                    {shelves.length > 0 ? (
+                      shelves.map(shelf => (
+                        <button
+                          key={shelf.id}
+                          className="btn btn-outline-primary w-100 mb-2"
+                          disabled={adding}
+                          onClick={() => addToShelf(shelf.id)}
+                        >
+                          {shelf.name}
+                        </button>
+                      ))
+                    ) : (
+                      <p>No shelves found.</p>
+                    )}
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
+                  </div>
                 </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="row mt-5">
+        <div className="col-12">
+          <h4>Reviews</h4>
+
+        <form onSubmit={handleSubmitReview} className="mb-4 shadow-sm rounded p-3">
+            <div className="mb-3">
+            <label htmlFor="rating" className="form-label">Rating (1-5)</label>
+            <select
+                id="rating"
+                className="form-select"
+                value={newRating}
+                onChange={(e) => setNewRating(parseInt(e.target.value, 10))}
+                disabled={submittingReview}
+                required
+            >
+                {[1, 2, 3, 4, 5].map(num => (
+                <option key={num} value={num}>{num}</option>
+                ))}
+            </select>
+            </div>
+
+            <div className="mb-3">
+            <label htmlFor="reviewText" className="form-label">Review (optional)</label>
+            <textarea
+                id="reviewText"
+                className="form-control"
+                rows="3"
+                value={newText}
+                onChange={(e) => setNewText(e.target.value)}
+                disabled={submittingReview}
+                maxLength={1000}
+                placeholder="Write your review here..."
+            />
+            </div>
+
+            <button type="submit" className="btn btn-primary" disabled={submittingReview}>
+            {submittingReview ? 'Submitting...' : 'Submit Review'}
+            </button>
+        </form>
+
+          {loadingReviews ? (
+            <p>Loading reviews...</p>
+          ) : errorReviews ? (
+            <p className="text-danger">{errorReviews}</p>
+          ) : reviews.length === 0 ? (
+            <p>No reviews yet.</p>
+          ) : (
+            <div className="list-group">
+              {reviews.map(review => (
+                <div key={review.id} className="list-group-item">
+                  <div className="d-flex justify-content-between align-items-center mb-1">
+                    <strong>
+                    {review.username || 'Anonymous'} (
+                    {new Date(review.createdAt).toLocaleDateString(undefined, {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                    })}
+                    )
+                    </strong>
+                    <StarRating rating={review.rating} size="1rem" />
+                  </div>
+                  {review.text && <p className="mb-0">{review.text}</p>}
                 </div>
-            )}
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
