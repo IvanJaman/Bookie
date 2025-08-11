@@ -1,0 +1,190 @@
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import api from '../../api/bookieApi';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import { getUserIdFromToken, getUsernameFromToken, getUserRole } from '../../utils/auth';
+
+function StarRating({ rating, maxStars = 5, size = '1.5rem' }) {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating - fullStars >= 0.5;
+  const emptyStars = maxStars - fullStars - (halfStar ? 1 : 0);
+
+  const starStyle = { fontSize: size, marginLeft: '2px' };
+
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+      {[...Array(fullStars)].map((_, i) => (
+        <i key={`full-${i}`} className="bi bi-star-fill text-success" style={starStyle}></i>
+      ))}
+      {halfStar && <i className="bi bi-star-half text-success" style={starStyle}></i>}
+      {[...Array(emptyStars)].map((_, i) => (
+        <i key={`empty-${i}`} className="bi bi-star text-success" style={starStyle}></i>
+      ))}
+    </span>
+  );
+}
+
+export default function BookDetail() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
+  const [shelves, setShelves] = useState([]);
+  const [adding, setAdding] = useState(false);
+
+  const userRole = getUserRole();
+  const userId = getUserIdFromToken();
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const res = await api.get(`/books/${id}`);
+        setBook(res.data);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load book details.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBook();
+  }, [id]);
+
+  const openModal = async () => {
+    try {
+        const userId = getUserIdFromToken();
+        if (!userId) {
+        alert("User ID not found. Please log in again.");
+        return;
+        }
+
+        const res = await api.get(`/shelves/user/${userId}`);
+        setShelves(res.data);
+        setShowModal(true);
+    } catch (err) {
+        console.error(err);
+        alert("Failed to load shelves.");
+    }
+    };
+
+  const addToShelf = async (shelfId) => {
+    setAdding(true);
+    try {
+      await api.post(`/shelves/${shelfId}/books/${id}`);
+      alert('Book succesfully added to shelf!');
+      setShowModal(false);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to add book.');
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  const handleDeleteBook = async () => {
+    if (!window.confirm("Are you sure you want to delete this book?")) return;
+
+    try {
+      await api.delete(`/books/${id}`);
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete book.");
+    }
+  };
+
+  if (loading) return <p>Loading book...</p>;
+  if (error) return <p className="text-danger">{error}</p>;
+  if (!book) return <p>Book not found.</p>;
+
+  const canDelete =
+    userRole === "Admin" ||
+    (userRole === "Publisher" && userId && userId === book.createdByUserId);
+
+  return (
+    <div className="container mt-4 position-relative">
+      <div className="row">
+        <div className="col-md-4">
+          <img
+            src={book.coverPhotoUrl}
+            alt={book.title}
+            className="img-fluid rounded shadow-sm"
+            style={{ objectFit: 'cover' }}
+          />
+        </div>
+
+        <div className="col-md-8">
+          <h1 className="fw-bold">{book.title}</h1>
+          <h4 className="text-muted mb-3">by {book.author}</h4>
+          <p><strong>Genre:</strong> {book.genreName}</p>
+          <p><strong>Language:</strong> {book.languageName}</p>
+          <p><strong>Year of Publication:</strong> {book.publicationYear}</p>
+          <p><strong>Page Count:</strong> {book.pageCount}</p>
+          <p><strong>ISBN:</strong> {book.isbn}</p>
+          <p><strong>Published by:</strong> {book.createdByUsername}</p>
+
+          <p>
+            <strong style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3em' }}>
+                Average Rating:
+                <StarRating rating={book.averageRating} size="1.5rem" />
+                ({book.averageRating})
+            </strong>
+          </p>
+
+          <div className="d-flex gap-2 mb-3">
+            <button className="btn btn-success" onClick={openModal}>
+                Add to Shelf
+            </button>
+
+            {canDelete && (
+                <button className="btn btn-danger" onClick={handleDeleteBook}>
+                Delete Book
+                </button>
+            )}
+          </div>
+
+          <div className="mt-4">
+            <h5>Blurb</h5>
+            <p>{book.blurb}</p>
+          </div>
+
+          {showModal && (
+                <div className="modal show d-block" tabIndex="-1">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Select Shelf</h5>
+                        <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+                    </div>
+                    <div className="modal-body">
+                        {shelves.length > 0 ? (
+                        shelves.map(shelf => (
+                            <button
+                            key={shelf.id}
+                            className="btn btn-outline-primary w-100 mb-2"
+                            disabled={adding}
+                            onClick={() => addToShelf(shelf.id)}
+                            >
+                            {shelf.name}
+                            </button>
+                        ))
+                        ) : (
+                        <p>No shelves found.</p>
+                        )}
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            )}
+        </div>
+      </div>
+    </div>
+  );
+}

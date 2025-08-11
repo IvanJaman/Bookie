@@ -13,6 +13,8 @@
         public double AverageRating { get; set; }
         public string GenreName { get; set; }
         public string LanguageName { get; set; }
+
+        public Guid CreatedByUserId { get; set; }
         public string CreatedByUsername { get; set; }
     }
 }

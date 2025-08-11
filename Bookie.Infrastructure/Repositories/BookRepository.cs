@@ -25,6 +25,7 @@ namespace Bookie.Infrastructure.Repositories
         {
             return await _context.Books
                 .Include(b => b.Genre)
+                .Include(b => b.CreatedByUser)
                 .FirstOrDefaultAsync(b => b.Id == id);
         }
 

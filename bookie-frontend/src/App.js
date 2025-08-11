@@ -15,6 +15,7 @@ import UpdateProfile from './pages/UpdateProfile/UpdateProfile';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
 import CreateShelf from './pages/CreateShelf/CreateShelf';
 import ShelfDetail from './pages/ShelfDetail/ShelfDetail';
+import BookDetail from './pages/BookDetail/BookDetail';
 
 function App() {
   const [role, setRole] = useState(getUserRole());
@@ -91,6 +92,14 @@ function App() {
           element={
             <Layout userRole={role}>
             <ShelfDetail />
+          </Layout>
+          } 
+        />
+        <Route 
+          path="/book/:id"
+          element={
+            <Layout userRole={role}>
+            <BookDetail />
           </Layout>
           } 
         />

@@ -24,3 +24,17 @@ export function getUsernameFromToken() {
     return null;
   }
 }
+
+export function getUserIdFromToken() {
+  const token = localStorage.getItem('token');
+  if (!token) return null;
+
+  try {
+    const decoded = jwtDecode(token);
+    return decoded?.sub || decoded?.['nameidentifier'] || null;
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null;
+  }
+}
+

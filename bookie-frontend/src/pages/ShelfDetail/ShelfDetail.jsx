@@ -14,7 +14,15 @@ export default function ShelfDetail() {
     const fetchShelf = async () => {
       try {
         const res = await api.get(`/shelves/${shelfId}`);
-        setShelf(res.data);
+
+        const sortedBooks = res.data.books?.sort((a, b) => 
+          new Date(b.addedAt) - new Date(a.addedAt)
+        );
+
+        setShelf({
+        ...res.data,
+        books: sortedBooks
+      });
       } catch (err) {
         console.error(err);
         setError('Failed to load shelf.');
@@ -38,12 +46,27 @@ export default function ShelfDetail() {
     }
   };
 
+  const handleRemoveBook = async (bookId) => {
+    if (!window.confirm('Remove this book from the shelf?')) return;
+
+    try {
+      await api.delete(`/shelves/${shelfId}/books/${bookId}`);
+      setShelf(prev => ({
+        ...prev,
+        books: prev.books.filter(b => b.bookId !== bookId)
+      }));
+    } catch (err) {
+      console.error(err);
+      alert('Failed to remove book from shelf.');
+    }
+  };
+
   const books = shelf?.books || [];
 
   if (loading) return <p>Loading shelf...</p>;
   if (error) return <p className="text-danger">{error}</p>;
   if (!shelf) return <p>Shelf not found.</p>;
-    console.log({ shelf, books })
+
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -60,7 +83,8 @@ export default function ShelfDetail() {
           {books.map((book) => (
             <div
               key={book.bookId}
-              className="p-3 rounded shadow-sm d-flex"
+              className="p-3 rounded shadow-sm d-flex position-relative"
+              style={{ minHeight: '250px' }}
             >
               <img
                 src={book.coverPhotoUrl}
@@ -88,6 +112,13 @@ export default function ShelfDetail() {
                         : book.blurb || ''}
                     </p>
                 </div>
+                <button
+                  className="btn btn-outline-danger btn-sm position-absolute"
+                  style={{ bottom: '10px', right: '10px' }}
+                  onClick={() => handleRemoveBook(book.bookId)}
+                >
+                  Remove from shelf
+                </button>
               </div>
             </div>
           ))}
