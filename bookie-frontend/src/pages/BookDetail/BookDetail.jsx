@@ -238,7 +238,7 @@ export default function BookDetail() {
 
         <form onSubmit={handleSubmitReview} className="mb-4 shadow-sm rounded p-3">
             <div className="mb-3">
-            <label htmlFor="rating" className="form-label">Rating (1-5)</label>
+            <label htmlFor="rating" className="form-label">Rate this book (1-5)</label>
             <select
                 id="rating"
                 className="form-select"
@@ -254,7 +254,7 @@ export default function BookDetail() {
             </div>
 
             <div className="mb-3">
-            <label htmlFor="reviewText" className="form-label">Review (optional)</label>
+            <label htmlFor="reviewText" className="form-label">Tell us how you feel about this book (optional)</label>
             <textarea
                 id="reviewText"
                 className="form-control"

@@ -32,13 +32,13 @@ function Navbar({ userRole }) {
     try {
       let response;
 
-      if (location.pathname.startsWith('/shelf/')) {
+      if (location.pathname.startsWith('/myshelves/')) {
         const shelfId = location.pathname.split('/')[2];
         response = await api.get(`/books/shelves/${shelfId}/search`, {
           params: { title: searchTerm }
         });
 
-        navigate(`/shelf/${shelfId}`, { state: { searchResults: response.data } });
+        navigate(`/myshelves/${shelfId}`, { state: { searchResults: response.data } });
 
       } else {
         response = await api.get('/books/search', {

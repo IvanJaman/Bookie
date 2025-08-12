@@ -40,7 +40,7 @@ namespace Bookie.Application.Mapping
                 .ForMember(dest => dest.GenreName, opt => opt.MapFrom(src => src.Genre.Name))
                 .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(src => src.Language))
                 .ForMember(dest => dest.CreatedByUsername, opt => opt.MapFrom(src => src.CreatedByUser.Username))
-                .ForMember(dest => dest.CreatedByUserId, opt => opt.MapFrom(src => src.CreatedByUser));
+                .ForMember(dest => dest.CreatedByUserId, opt => opt.MapFrom(src => src.CreatedByUserId));
 
             CreateMap<CreateBookDto, Book>()
                 .ForMember(dest => dest.Genre, opt => opt.Ignore())

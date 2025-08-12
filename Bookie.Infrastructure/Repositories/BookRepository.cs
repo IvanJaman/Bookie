@@ -101,11 +101,17 @@ namespace Bookie.Infrastructure.Repositories
                 .Select(sb => sb.Book)
                 .AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(title))
-                query = query.Where(b => b.Title.Contains(title));
+            if (!string.IsNullOrEmpty(title))
+            {
+                var lowerTitle = title.ToLower();
+                query = query.Where(b => b.Title.ToLower().Contains(lowerTitle));
+            }
 
-            if (!string.IsNullOrWhiteSpace(author))
-                query = query.Where(b => b.Author.Contains(author));
+            if (!string.IsNullOrEmpty(author))
+            {
+                var lowerAuthor = author.ToLower();
+                query = query.Where(b => b.Author.ToLower().Contains(lowerAuthor));
+            }
 
             return await query.ToListAsync();
         }

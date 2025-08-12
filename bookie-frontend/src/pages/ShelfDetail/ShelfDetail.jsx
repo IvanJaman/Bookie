@@ -1,28 +1,56 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import api from '../../api/bookieApi';
 
 export default function ShelfDetail() {
   const { shelfId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [shelf, setShelf] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const sortBooks = (books) =>
+    (books ?? []).slice().sort(
+      (a, b) => new Date(b.addedAt) - new Date(a.addedAt) // newest first
+      // swap a/b if you want oldest first
+    );
+
+  const fetchShelf = async () => {
+    try {
+      const res = await api.get(`/shelves/${shelfId}`);
+      setShelf({
+        ...res.data,
+        books: sortBooks(res.data.books)
+      });
+    } catch (err) {
+      console.error(err);
+      setError('Failed to load shelf.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchShelf = async () => {
+    const loadData = async () => {
+      setLoading(true);
+
       try {
         const res = await api.get(`/shelves/${shelfId}`);
 
-        const sortedBooks = res.data.books?.sort((a, b) => 
-          new Date(b.addedAt) - new Date(a.addedAt)
-        );
-
-        setShelf({
-        ...res.data,
-        books: sortedBooks
-      });
+        if (location.state?.searchResults) {
+          // Replace only the books, keep metadata
+          setShelf({
+            ...res.data,
+            books: sortBooks(location.state.searchResults)
+          });
+        } else {
+          setShelf({
+            ...res.data,
+            books: sortBooks(res.data.books)
+          });
+        }
       } catch (err) {
         console.error(err);
         setError('Failed to load shelf.');
@@ -31,8 +59,8 @@ export default function ShelfDetail() {
       }
     };
 
-    fetchShelf();
-  }, [shelfId]);
+    loadData();
+  }, [shelfId, location.state]);
 
   const handleDeleteShelf = async () => {
     if (!window.confirm('Are you sure you want to delete this shelf?')) return;
