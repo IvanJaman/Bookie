@@ -11,6 +11,7 @@
         public int PageCount { get; set; }
         public string CoverPhotoUrl { get; set; }
         public double AverageRating { get; set; }
+        public string GetBookUrl { get; set; }
         public string GenreName { get; set; }
         public string LanguageName { get; set; }
 

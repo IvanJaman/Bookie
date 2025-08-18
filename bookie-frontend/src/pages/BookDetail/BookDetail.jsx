@@ -186,6 +186,20 @@ export default function BookDetail() {
               Add to Shelf
             </button>
 
+            <a
+              href={book.getBookUrl || "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`btn btn-success ${!book.getBookUrl ? "opacity-50" : ""}`}
+              aria-disabled={!book.getBookUrl}
+              title={!book.getBookUrl ? "E-book not available" : undefined}
+              onClick={(e) => {
+                if (!book.getBookUrl) e.preventDefault();
+              }}
+            >
+              Get an Ebook!
+            </a>
+
             {canDelete && (
               <button className="btn btn-danger" onClick={handleDeleteBook}>
                 Delete Book
