@@ -54,14 +54,13 @@ namespace Bookie.WebApi.Controllers
         }
 
         // api/Shelves/Rename/{id}
-        [Authorize]
         [HttpPut("Rename/{id}")]
-        public async Task<IActionResult> Rename(Guid id, [FromBody] string newName)
+        public async Task<IActionResult> Rename(Guid id, [FromBody] RenameShelfDto dto)
         {
-            if (string.IsNullOrWhiteSpace(newName))
+            if (string.IsNullOrWhiteSpace(dto.NewName))
                 return BadRequest("New shelf name cannot be empty.");
 
-            var renamed = await _shelfService.RenameShelfAsync(id, newName);
+            var renamed = await _shelfService.RenameShelfAsync(id, dto.NewName);
             if (!renamed)
                 return NotFound();
 

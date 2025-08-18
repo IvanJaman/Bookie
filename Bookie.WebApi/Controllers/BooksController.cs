@@ -1,5 +1,4 @@
 ﻿using Bookie.Application.DTOs;
-using Bookie.Application.Interfaces;
 using Bookie.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +15,6 @@ namespace Bookie.WebApi.Controllers
         public BooksController(IBookService bookService)
         {
             _bookService = bookService;
-        }
-
-        // api/Books
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var books = await _bookService.GetAllAsync();
-            return Ok(books);
         }
 
         // api/Books/{id}
@@ -58,20 +49,6 @@ namespace Bookie.WebApi.Controllers
 
             var createdBook = await _bookService.CreateAsync(newBook, userId);
             return CreatedAtAction(nameof(GetById), new { id = createdBook.Id }, createdBook);
-        }
-
-        // api/Books/{id}
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Publisher,Admin")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBookDto updatedBook)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var success = await _bookService.UpdateAsync(id, updatedBook);
-            if (!success) return NotFound();
-
-            return NoContent();
         }
 
         // api/Books/{id}

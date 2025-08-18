@@ -37,6 +37,7 @@ export default function BookDetail() {
 
   const userRole = getUserRole();
   const userId = getUserIdFromToken();
+  const isAdmin = userRole === "Admin";
 
   const [reviews, setReviews] = useState([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
@@ -227,7 +228,7 @@ export default function BookDetail() {
                 if (!book.getBookUrl) e.preventDefault();
               }}
             >
-              Get an Ebook!
+              Get an E-book!
             </a>
 
             {canDelete && (
@@ -349,8 +350,9 @@ export default function BookDetail() {
 
                   {review.text && <p className="mb-0">{review.text}</p>}
 
-                  {review.userId === userId && (
-                    <div className="d-flex gap-2 mt-2">
+                  {(review.userId === userId || isAdmin) && (
+                  <div className="d-flex gap-2 mt-2">
+                    {review.userId === userId && !isAdmin && (
                       <button
                         className="btn btn-sm btn-outline-success"
                         onClick={() => {
@@ -362,15 +364,16 @@ export default function BookDetail() {
                       >
                         Update review
                       </button>
+                    )}
 
-                      <button
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleDeleteReview(review.id)}
-                      >
-                        Delete review
-                      </button>
-                    </div>
-                  )}
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => handleDeleteReview(review.id)}
+                    >
+                      Delete review
+                    </button>
+                  </div>
+                )}
                 </div>
               ))}
             </div>

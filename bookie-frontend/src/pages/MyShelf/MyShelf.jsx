@@ -11,6 +11,11 @@ export default function MyShelf() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const [renaming, setRenaming] = useState(false);
+  const [newShelfName, setNewShelfName] = useState('');
+  const [renamingLoading, setRenamingLoading] = useState(false);
+
+
   const sortBooks = (books) =>
     (books ?? []).slice().sort(
       (a, b) => new Date(b.addedAt) - new Date(a.addedAt) 
@@ -96,10 +101,64 @@ export default function MyShelf() {
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>{shelf.name}</h1>
-        <button className="btn btn-danger" onClick={handleDeleteShelf}>
-          Delete Shelf
-        </button>
+        {renaming ? (
+          <div className="d-flex gap-2">
+            <input
+              type="text"
+              className="form-control"
+              value={newShelfName}
+              onChange={(e) => setNewShelfName(e.target.value)}
+              placeholder="New shelf name"
+            />
+            <button
+              className="btn btn-success"
+              disabled={renamingLoading}
+              onClick={async () => {
+                if (!newShelfName.trim()) {
+                  alert("Shelf name cannot be empty");
+                  return;
+                }
+                setRenamingLoading(true);
+                try {
+                  await api.put(`/shelves/rename/${shelfId}`, { newName: newShelfName.trim() });
+                  setShelf(prev => ({ ...prev, name: newShelfName.trim() }));
+                  setRenaming(false);
+                } catch (err) {
+                  console.error(err);
+                  alert("Failed to rename shelf");
+                } finally {
+                  setRenamingLoading(false);
+                }
+              }}
+            >
+              Save
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setRenaming(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <>
+            <h1>{shelf.name}</h1>
+            <div className="d-flex gap-2">
+              <button
+                className="btn btn-success"
+                onClick={() => {
+                  setRenaming(true);
+                  setNewShelfName(shelf.name);
+                }}
+              >
+                Rename Shelf
+              </button>
+              <button className="btn btn-danger" onClick={handleDeleteShelf}>
+                Delete Shelf
+              </button>
+            </div>
+          </>
+        )}
       </div>
 
       {books.length === 0 ? (

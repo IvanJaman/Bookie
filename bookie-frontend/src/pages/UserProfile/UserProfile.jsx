@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from '../../api/bookieApi'; 
+import { getUserRole } from '../../utils/auth';
 
 export default function UserProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const userRole = getUserRole();
+  const isAdmin = userRole === "Admin";
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -23,11 +27,33 @@ export default function UserProfile() {
     fetchUser();
   }, [id]);
 
+  const handleDeleteUser = async () => {
+    if (!window.confirm("Are you sure you want to delete this user?")) return;
+
+    try {
+      await api.delete(`/users/${id}`);
+      alert("User deleted successfully!");
+      navigate("/home"); 
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete user");
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (!user) return <p>User not found</p>;
 
   return (
-    <div className="container mt-3">
+    <div className="container mt-3 position-relative">
+        {isAdmin && (
+            <button
+            className="btn btn-danger position-absolute top-0 end-0 mt-3"
+            onClick={handleDeleteUser}
+            >
+            Delete User
+            </button>
+        )}
+
       <h2>{user.username}</h2>
       {user.bio && <p>{user.bio}</p>}
       {user.websiteUrl && (
