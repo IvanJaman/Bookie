@@ -94,6 +94,17 @@ namespace Bookie.WebApi.Controllers
             return NoContent();
         }
 
+        // api/Users/{id}/role
+        [HttpPut("{id}/role")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateUserRole(Guid id, [FromBody] UpdateUserRoleDto dto)
+        {
+            var updated = await _userService.UpdateUserRoleAsync(id, dto.RoleName);
+            if (!updated) return NotFound();
+            return NoContent();
+        }
+
+
         // api/Users/{id}
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")] 

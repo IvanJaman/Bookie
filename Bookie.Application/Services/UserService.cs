@@ -62,6 +62,19 @@ namespace Bookie.Application.Services
             return true;
         }
 
+        public async Task<bool> UpdateUserRoleAsync(Guid userId, string roleName)
+        {
+            var user = await _userRepo.GetByIdAsync(userId);
+            if (user == null) return false;
+
+            var role = await _roleRepo.GetByNameAsync(roleName);
+            if (role == null) return false;
+
+            user.Role = role;
+            await _userRepo.UpdateAsync(user);
+            return true;
+        }
+
         public async Task<bool> DeleteAsync(Guid id)
         {
             var user = await _userRepo.GetByIdAsync(id);

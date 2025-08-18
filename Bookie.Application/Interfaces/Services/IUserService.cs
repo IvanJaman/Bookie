@@ -9,6 +9,7 @@ namespace Bookie.Application.Interfaces.Services
         Task<IEnumerable<UserDto>> GetAllAsync();
         Task<bool> UpdateProfileAsync(Guid userId, UpdateUserDto updateDto);
         Task<bool> ChangePasswordAsync(Guid userId, ChangePasswordDto changeDto);
+        Task<bool> UpdateUserRoleAsync(Guid userId, string roleName);
         Task<bool> DeleteAsync(Guid id);
     }
 }

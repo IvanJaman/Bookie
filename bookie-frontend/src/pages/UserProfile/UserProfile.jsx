@@ -55,7 +55,41 @@ export default function UserProfile() {
         )}
 
       <h2>{user.username}</h2>
+
+      {isAdmin && user.roleName && (
+        <p>
+            <strong>Role:</strong> {user.roleName}
+        </p>
+        )}
+
+        {isAdmin && (
+        <div className="mt-2">
+            <label htmlFor="roleSelect"><strong>Change this user's role:</strong></label>
+            <select
+            id="roleSelect"
+            className="form-select w-auto d-inline-block ms-2"
+            value={user.roleName}
+            onChange={async (e) => {
+                const newRole = e.target.value;
+                try {
+                await api.put(`/users/${id}/role`, { roleName: newRole });
+                setUser({ ...user, roleName: newRole });
+                alert("Role updated successfully!");
+                } catch (err) {
+                console.error(err);
+                alert("Failed to update role");
+                }
+            }}
+            >
+            <option value="User">User</option>
+            <option value="Publisher">Publisher</option>
+            <option value="Admin">Admin</option>
+            </select>
+        </div>
+        )}
+
       {user.bio && <p>{user.bio}</p>}
+
       {user.websiteUrl && (
         <p>
           Website:{" "}

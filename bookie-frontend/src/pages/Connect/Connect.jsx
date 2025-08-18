@@ -31,7 +31,7 @@ export default function Connect() {
 
   return (
     <div className="container mt-4">
-      <h1 className="mb-4">Connect with Users</h1>
+      <h1 className="mb-4">Connect with other readers</h1>
       <div className="list-group">
         {users.map((user) => (
           <div
