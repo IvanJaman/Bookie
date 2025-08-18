@@ -1,0 +1,104 @@
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from '../../api/bookieApi'; 
+
+export default function UserProfile() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get(`/users/${id}`);
+        setUser(response.data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [id]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!user) return <p>User not found</p>;
+
+  return (
+    <div className="container mt-3">
+      <h2>{user.username}</h2>
+      {user.bio && <p>{user.bio}</p>}
+      {user.websiteUrl && (
+        <p>
+          Website:{" "}
+          <a href={user.websiteUrl} target="_blank" rel="noopener noreferrer">
+            {user.websiteUrl}
+          </a>
+        </p>
+      )}
+
+      <h4>Shelves</h4>
+      <div className="d-flex flex-wrap gap-3 mt-3">
+        {user.shelves.length === 0 ? (
+          <p>No shelves available.</p>
+        ) : (
+          user.shelves.map((shelf) => {
+            const sortedBooks = [...shelf.books].sort(
+              (a, b) => new Date(b.addedAt) - new Date(a.addedAt)
+            );
+            const lastFourBooks = sortedBooks.slice(0, 4);
+
+            const handleShelfClick = () => {
+              navigate(`/Shelves/${shelf.id}`);
+            };
+
+            return (
+              <div
+                key={shelf.id}
+                className="card"
+                style={{ width: '180px', cursor: 'pointer' }}
+                onClick={handleShelfClick}
+              >
+                {lastFourBooks.length > 0 ? (
+                  <div
+                    className="d-grid"
+                    style={{
+                      gridTemplateColumns: 'repeat(2, 1fr)',
+                      gridTemplateRows: 'repeat(2, 125px)',
+                      height: '250px',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {lastFourBooks.map((book) => (
+                      <img
+                        key={book.id}
+                        src={book.coverPhotoUrl}
+                        alt={`Cover of ${book.title}`}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div
+                    className="d-flex align-items-center justify-content-center bg-secondary text-white"
+                    style={{ height: '250px' }}
+                  >
+                    No books yet
+                  </div>
+                )}
+                <div className="card-body p-2">
+                  <h5 className="card-title mb-1">{shelf.name}</h5>
+                  <p className="card-text mb-0">
+                    {shelf.books.length} book{shelf.books.length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+}

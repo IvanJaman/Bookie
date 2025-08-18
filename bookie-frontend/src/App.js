@@ -14,8 +14,11 @@ import { getUserRole } from './utils/auth';
 import UpdateProfile from './pages/UpdateProfile/UpdateProfile';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
 import CreateShelf from './pages/CreateShelf/CreateShelf';
-import ShelfDetail from './pages/ShelfDetail/ShelfDetail';
+import MyShelf from './pages/MyShelf/MyShelf';
 import BookDetail from './pages/BookDetail/BookDetail';
+import UserProfile from './pages/UserProfile/UserProfile';
+import UserShelf from './pages/UserShelf/UserShelf';
+import Connect from './pages/Connect/Connect';
 
 function App() {
   const [role, setRole] = useState(getUserRole());
@@ -64,6 +67,14 @@ function App() {
           } 
         />
         <Route 
+          path="/users/:id" 
+          element={
+            <Layout userRole={role}>
+              <UserProfile />
+            </Layout>
+          } 
+        />
+        <Route 
           path="/update-profile" 
           element={
             <Layout userRole={role}>
@@ -90,16 +101,32 @@ function App() {
         <Route 
           path="/myshelves/:shelfId"
           element={
-            <Layout userRole={role}>
-            <ShelfDetail />
+          <Layout userRole={role}>
+            <MyShelf />
           </Layout>
           } 
         />
         <Route 
           path="/book/:id"
           element={
-            <Layout userRole={role}>
+          <Layout userRole={role}>
             <BookDetail />
+          </Layout>
+          } 
+        />
+        <Route 
+          path="/shelves/:shelfId" 
+          element={
+          <Layout userRole={role}>
+            <UserShelf />
+          </Layout>
+          } 
+        />
+        <Route 
+          path="/connect" 
+          element={
+          <Layout userRole={role}>
+            <Connect />
           </Layout>
           } 
         />

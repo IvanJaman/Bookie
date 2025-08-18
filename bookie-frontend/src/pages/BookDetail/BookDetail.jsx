@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import api from '../../api/bookieApi';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { getUserIdFromToken, getUsernameFromToken, getUserRole } from '../../utils/auth';
@@ -298,7 +298,13 @@ export default function BookDetail() {
                 <div key={review.id} className="list-group-item">
                   <div className="d-flex justify-content-between align-items-center mb-1">
                     <strong>
-                    {review.username || 'Anonymous'} (
+                    <Link
+                        to={review.userId === userId ? '/myProfile' : `/users/${review.userId}`}
+                        className="text-decoration-none"
+                      >
+                        {review.username || "Anonymous"}
+                      </Link>{" "}  
+                    (
                     {new Date(review.createdAt).toLocaleDateString(undefined, {
                         year: 'numeric',
                         month: 'short',

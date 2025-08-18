@@ -122,6 +122,18 @@ function Navbar({ userRole }) {
           </li>
 
           <li className="nav-item">
+            <Link
+              className="nav-link"
+              to="/connect"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              title="Connect with other readers"
+            >
+              <i className="bi bi-people" style={{ fontSize: '2rem' }}></i>
+            </Link>
+          </li>
+
+          <li className="nav-item">
             <button
               className="nav-link btn btn-link p-0 text-white d-flex align-items-center"
               onClick={handleLogout}

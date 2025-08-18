@@ -7,6 +7,7 @@
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Username { get; set; }
+        public Guid UserId { get; set; }
         public string BookTitle { get; set; }
         public Guid BookId { get; set; }
     }

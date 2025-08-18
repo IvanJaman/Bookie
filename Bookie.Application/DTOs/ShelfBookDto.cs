@@ -13,6 +13,7 @@ namespace Bookie.Application.DTOs
         public string Author { get; set; }
         public string Blurb { get; set; }
         public string CoverPhotoUrl { get; set; }
+        public double AverageRating { get; set; }
         public DateTime AddedAt { get; set; }
     }
 }

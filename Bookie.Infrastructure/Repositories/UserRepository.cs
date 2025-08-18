@@ -18,6 +18,8 @@ namespace Bookie.Infrastructure.Repositories
         {
             return await _context.Users
                 .Include(u => u.Shelves)
+                    .ThenInclude(s => s.ShelfBooks)
+                        .ThenInclude(sb => sb.Book)
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }

@@ -30,7 +30,8 @@ namespace Bookie.Application.Mapping
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Book.Author))
                 .ForMember(dest => dest.Blurb, opt => opt.MapFrom(src => src.Book.Blurb))
                 .ForMember(dest => dest.CoverPhotoUrl, opt => opt.MapFrom(src => src.Book.CoverPhotoUrl))
-                .ForMember(dest => dest.AddedAt, opt => opt.MapFrom(src => src.AddedAt));
+                .ForMember(dest => dest.AddedAt, opt => opt.MapFrom(src => src.AddedAt))
+                .ForMember(dest => dest.AverageRating, opt => opt.MapFrom(src => src.Book.AverageRating));
 
             CreateMap<Review, ReviewDto>()
                 .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title))

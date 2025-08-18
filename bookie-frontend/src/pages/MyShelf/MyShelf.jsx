@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import api from '../../api/bookieApi';
 
-export default function ShelfDetail() {
+export default function MyShelf() {
   const { shelfId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,8 +13,7 @@ export default function ShelfDetail() {
 
   const sortBooks = (books) =>
     (books ?? []).slice().sort(
-      (a, b) => new Date(b.addedAt) - new Date(a.addedAt) // newest first
-      // swap a/b if you want oldest first
+      (a, b) => new Date(b.addedAt) - new Date(a.addedAt) 
     );
 
   const fetchShelf = async () => {
@@ -40,7 +39,6 @@ export default function ShelfDetail() {
         const res = await api.get(`/shelves/${shelfId}`);
 
         if (location.state?.searchResults) {
-          // Replace only the books, keep metadata
           setShelf({
             ...res.data,
             books: sortBooks(location.state.searchResults)
