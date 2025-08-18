@@ -45,6 +45,7 @@ export default function BookDetail() {
   const [newRating, setNewRating] = useState(5);
   const [newText, setNewText] = useState('');
   const [submittingReview, setSubmittingReview] = useState(false);
+  const [editingReviewId, setEditingReviewId] = useState(null);
 
   useEffect(() => {
     async function fetchBook() {
@@ -117,6 +118,19 @@ export default function BookDetail() {
     }
   };
 
+  const handleDeleteReview = async (reviewId) => {
+    if (!window.confirm("Are you sure you want to delete this review?")) return;
+
+    try {
+      await api.delete(`/reviews/${reviewId}`);
+      setReviews(prev => prev.filter(r => r.id !== reviewId));
+      alert('Review deleted successfully!');
+    } catch (err) {
+      console.error(err);
+      alert('Failed to delete review');
+    }
+  };
+
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     if (newRating < 1 || newRating > 5) {
@@ -126,17 +140,33 @@ export default function BookDetail() {
     setSubmittingReview(true);
 
     try {
-      await api.post('/reviews', {
-        bookId: id,
-        rating: newRating,
-        text: newText.trim(),
-      });
-      alert('Review submitted!');
+      if (editingReviewId) {
+        await api.put(`/reviews/${editingReviewId}`, {
+          rating: newRating,
+          text: newText.trim(),
+        });
+        alert('Review updated!');
+        setEditingReviewId(null); 
+      } else {
+        await api.post('/reviews', {
+          bookId: id,
+          rating: newRating,
+          text: newText.trim(),
+        });
+        alert('Review submitted!');
+      }
+
       setNewRating(5);
       setNewText('');
+
       const res = await api.get(`/reviews/book/${id}`);
-      setReviews(res.data);
-    } catch {
+      const sortedReviews = [...res.data].sort((a, b) => b.rating - a.rating);
+      setReviews(sortedReviews);
+
+      document.getElementById('reviewsSection')?.scrollIntoView({ behavior: 'smooth' });
+
+    } catch (err) {
+      console.error(err);
       alert('Failed to submit review');
     } finally {
       setSubmittingReview(false);
@@ -225,7 +255,7 @@ export default function BookDetail() {
                       shelves.map(shelf => (
                         <button
                           key={shelf.id}
-                          className="btn btn-outline-primary w-100 mb-2"
+                          className="btn btn-success w-100 mb-2"
                           disabled={adding}
                           onClick={() => addToShelf(shelf.id)}
                         >
@@ -246,11 +276,11 @@ export default function BookDetail() {
         </div>
       </div>
 
-      <div className="row mt-5">
+      <div className="row mt-5 " id="reviewsSection">
         <div className="col-12">
           <h4>Reviews</h4>
 
-        <form onSubmit={handleSubmitReview} className="mb-4 shadow-sm rounded p-3">
+        <form id="reviewForm" onSubmit={handleSubmitReview} className="mb-4 shadow-sm rounded p-3">
             <div className="mb-3">
             <label htmlFor="rating" className="form-label">Rate this book (1-5)</label>
             <select
@@ -281,7 +311,7 @@ export default function BookDetail() {
             />
             </div>
 
-            <button type="submit" className="btn btn-primary" disabled={submittingReview}>
+            <button type="submit" className="btn btn-success" disabled={submittingReview}>
             {submittingReview ? 'Submitting...' : 'Submit Review'}
             </button>
         </form>
@@ -298,12 +328,14 @@ export default function BookDetail() {
                 <div key={review.id} className="list-group-item">
                   <div className="d-flex justify-content-between align-items-center mb-1">
                     <strong>
+
                     <Link
                         to={review.userId === userId ? '/myProfile' : `/users/${review.userId}`}
                         className="text-decoration-none"
                       >
                         {review.username || "Anonymous"}
                       </Link>{" "}  
+
                     (
                     {new Date(review.createdAt).toLocaleDateString(undefined, {
                         year: 'numeric',
@@ -314,7 +346,31 @@ export default function BookDetail() {
                     </strong>
                     <StarRating rating={review.rating} size="1rem" />
                   </div>
+
                   {review.text && <p className="mb-0">{review.text}</p>}
+
+                  {review.userId === userId && (
+                    <div className="d-flex gap-2 mt-2">
+                      <button
+                        className="btn btn-sm btn-outline-success"
+                        onClick={() => {
+                          setEditingReviewId(review.id); 
+                          setNewRating(review.rating);
+                          setNewText(review.text || '');
+                          document.getElementById('reviewForm')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                      >
+                        Update review
+                      </button>
+
+                      <button
+                        className="btn btn-sm btn-outline-danger"
+                        onClick={() => handleDeleteReview(review.id)}
+                      >
+                        Delete review
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

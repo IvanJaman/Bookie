@@ -78,6 +78,8 @@ namespace Bookie.Application.Services
             if (updateDto.Text != null)
                 review.Text = updateDto.Text;
 
+            review.CreatedAt = DateTime.UtcNow;
+
             await _reviewRepo.UpdateAsync(review);
 
             await UpdateAverageRating(review.BookId);
