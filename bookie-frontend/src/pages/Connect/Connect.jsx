@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/bookieApi';
+import { getUserIdFromToken } from '../../utils/auth';
 
 export default function Connect() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const currentUserId = getUserIdFromToken();
 
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
         const res = await api.get('/users'); 
-        setUsers(res.data);
+        const otherUsers = res.data.filter(user => user.id !== currentUserId);
+        setUsers(otherUsers);
       } catch (err) {
         console.error(err);
         setError('Failed to load users.');
@@ -23,7 +26,7 @@ export default function Connect() {
     };
 
     fetchUsers();
-  }, []);
+  }, [currentUserId]);
 
   if (loading) return <p>Loading users...</p>;
   if (error) return <p className="text-danger">{error}</p>;
